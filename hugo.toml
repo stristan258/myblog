@@ -1,4 +1,4 @@
-baseURL = 'https://tristphoto.com/'
+baseURL = 'https://www.tristphoto.com/'
 locale = 'en-us'
 title = 'trisphoto'
 theme = 'PaperMod'
