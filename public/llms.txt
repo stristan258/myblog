@@ -1,4 +1,0 @@
-# trisphoto
-
-## Posts
-- [your farts smell](http://localhost:1313/posts/hello-world/)
