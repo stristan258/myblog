@@ -69,3 +69,6 @@ pygmentsUseClasses: true
 markup:
   highlight:
     noClasses: false
+  goldmark:
+    renderer:
+      unsafe: true
