@@ -13,10 +13,8 @@ minify:
   minifyOutput: true
 
 taxonomies:
-  tag: tags
   trip: trips
   place: places
-  person: people
 
 params:
   env: production
@@ -56,9 +54,9 @@ menu:
       name: Places
       url: /places/
       weight: 20
-    - identifier: people
-      name: People
-      url: /people/
+    - identifier: livemap
+      name: Live Map
+      url: /live-map/
       weight: 30
     - identifier: archives
       name: Archive
