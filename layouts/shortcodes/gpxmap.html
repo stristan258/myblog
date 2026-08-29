@@ -3,7 +3,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-gpx@1.7.0/gpx.js"></script>
 <script>
-  var map = L.map('gpx-map-{{ .Ordinal }}');
+  var map = L.map('gpx-map-{{ .Ordinal }}').setView([0, 0], 2);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
