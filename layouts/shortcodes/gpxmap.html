@@ -1,0 +1,16 @@
+<div id="gpx-map-{{ .Ordinal }}" style="height: 500px; width: 100%; margin: 1em 0;"></div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-gpx@1.7.0/gpx.js"></script>
+<script>
+  var map = L.map('gpx-map-{{ .Ordinal }}');
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  new L.GPX("{{ .Get 0 }}", {
+    async: true
+  }).on('loaded', function(e) {
+    map.fitBounds(e.target.getBounds());
+  }).addTo(map);
+</script>

@@ -11,4 +11,4 @@ cover:
 draft: false
 ---
 
-<script src="https://lighterpack.com/e/s6xzpv"></script><div id="s6xzpv"></div>
+{{< gpxmap "https://images.trisphoto.com/routes/TeAraroaTrail_2026_27.gpx" >}}
