@@ -11,4 +11,3 @@ cover:
 draft: false
 ---
 
-{{< gpxmap "https://images.trisphoto.com/routes/TeAraroaTrail_2026_27.gpx" >}}
