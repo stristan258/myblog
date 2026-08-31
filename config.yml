@@ -56,9 +56,9 @@ menu:
       name: Places
       url: /places/
       weight: 20
-    - identifier: people
-      name: People
-      url: /people/
+    - identifier: live map
+      name: Live Map
+      url: /live-map/
       weight: 30
     - identifier: archives
       name: Archive

@@ -1,3 +1,23 @@
 .tag-entry .entry-cover {
     display: block !important;
 }
+
+.profile-hero {
+  text-align: center;
+  padding: 3em 1em;
+}
+.profile-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profile-tagline {
+  font-size: 1.3em;
+  max-width: 500px;
+  margin: 1em auto;
+}
+.profile-links a {
+  margin: 0 1em;
+  font-weight: bold;
+}
