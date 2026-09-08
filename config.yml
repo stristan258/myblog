@@ -47,9 +47,12 @@ params:
         url: /about/
       - name: Trips
         url: /trips/
-    socialIcons: 
-      - name: Strava
-        url: "https://www.strava.com/athletes/31753850"
+
+  socialIcons:
+    - name: strava
+      url: "https://www.strava.com/athletes/31753850"
+    - name: github
+      url: "https://github.com/stristan258"
 
   cover:
     hidden: false
