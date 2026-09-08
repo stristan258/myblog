@@ -13,13 +13,13 @@ minify:
   minifyOutput: true
 
 taxonomies:
-  tag: tags
-  trip: trips
   place: places
   person: people
 
 params:
   env: production
+  mainSections:
+    - posts
   DateFormat: "January 2, 2006"
   defaultTheme: auto
   disableThemeToggle: false
@@ -42,8 +42,14 @@ params:
   profileMode:
     enabled: true
     title: Tristan Smith
-
-  socialIcons:
+    buttons:
+      - name: Archive
+        url: /about/
+      - name: Trips
+        url: /trips/
+    socialIcons: 
+      - name: Strava
+        url: "https://www.strava.com/athletes/31753850"
 
   cover:
     hidden: false
@@ -52,22 +58,26 @@ params:
 
 menu:
   main:
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 1
     - identifier: trips
       name: Trips
       url: /trips/
-      weight: 10
+      weight: 2
     - identifier: places
       name: Places
       url: /places/
-      weight: 20
+      weight: 3
     - identifier: live map
       name: Live Map
       url: /live-map/
-      weight: 30
+      weight: 4
     - identifier: archives
       name: Archive
       url: /archives/
-      weight: 40
+      weight: 5
 
 pygmentsUseClasses: true
 markup:
