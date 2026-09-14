@@ -7,5 +7,5 @@ cover:
   image: ""
   alt: ""
   caption: ""
-draft: true
+draft: false
 ---
