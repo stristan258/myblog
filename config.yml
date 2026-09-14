@@ -1,5 +1,5 @@
 baseURL: "https://www.trisphoto.com/"
-title: trisphoto
+title:
 paginate: 5
 theme: PaperMod
 
@@ -43,17 +43,23 @@ params:
   profileMode:
     enabled: true
     title: Tristan Smith
+    imageUrl: "/images/profile.jpg"
+    imageTitle: "Tristan Smith"
+    imageWidth: 150
+    imageHeight: 150
     buttons:
-      - name: Archive
-        url: /about/
-      - name: Trips
-        url: /trips/
+      - name: Places
+        url: /places/
+      - name: Archives
+        url: /archives/
 
   socialIcons:
     - name: strava
       url: "https://www.strava.com/athletes/31753850"
     - name: github
       url: "https://github.com/stristan258"
+    - name: email
+      url: "mailto:stristan258@gmail.com"
 
   cover:
     hidden: false
@@ -62,26 +68,18 @@ params:
 
 menu:
   main:
-    - identifier: about
-      name: About
-      url: /about/
-      weight: 1
+    - identifier: home
+      name: Home
+      url: /
+      weight: 10
     - identifier: trips
       name: Trips
       url: /trips/
-      weight: 2
-    - identifier: places
-      name: Places
-      url: /places/
-      weight: 3
+      weight: 30
     - identifier: live map
       name: Live Map
       url: /live-map/
-      weight: 4
-    - identifier: archives
-      name: Archive
-      url: /archives/
-      weight: 5
+      weight: 40
 
 pygmentsUseClasses: true
 markup:
