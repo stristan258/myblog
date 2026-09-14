@@ -1,0 +1,13 @@
+<ul class="post-tags" aria-label="Places and archive">
+{{- with .GetTerms "places" }}
+  {{- range . }}
+  <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+  {{- end }}
+{{- end }}
+{{- if not .Date.IsZero }}
+{{- $year := .Date.Format "2006" }}
+{{- $month := .Date.Format "January" }}
+  <li><a href="{{ "/archives/" | relLangURL }}#{{ $year }}">{{ $year }}</a></li>
+  <li><a href="{{ "/archives/" | relLangURL }}#{{ $year }}-{{ $month }}">{{ $month }}</a></li>
+{{- end }}
+</ul>
