@@ -20,6 +20,7 @@ params:
   env: production
   mainSections:
     - posts
+    - trips
   DateFormat: "January 2, 2006"
   defaultTheme: auto
   disableThemeToggle: false

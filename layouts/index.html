@@ -1,0 +1,9 @@
+{{- define "main" }}
+
+{{- if site.Params.profileMode.enabled }}
+{{- partial "index_profile.html" . }}
+{{- end }}
+
+{{- partial "home_posts.html" . }}
+
+{{- end }}
