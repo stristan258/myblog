@@ -1,9 +1,10 @@
 name: Deploy Hugo site to Pages
 
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
+# Commented automatic deployment through github pages
+# on:
+#   push:
+#     branches: ["main"]
+#   workflow_dispatch:
 
 permissions:
   contents: read
