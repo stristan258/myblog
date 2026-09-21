@@ -24,10 +24,16 @@ async function getAccessToken() {
   });
 
   if (!response.ok) {
-    throw new Error("Spotify access token request failed.");
+    const details = await response.json().catch(() => ({}));
+    throw new Error(`Spotify token refresh failed: ${details.error || "unknown_error"}${details.error_description ? ` (${details.error_description})` : ""}`);
   }
 
-  return (await response.json()).access_token;
+  const data = await response.json();
+  if (!data.access_token) {
+    throw new Error("Spotify token refresh returned no access token.");
+  }
+
+  return data.access_token;
 }
 
 function formatItem(item, isPlaying) {
