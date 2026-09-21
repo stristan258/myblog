@@ -41,12 +41,14 @@ function formatItem(item, isPlaying) {
   const title = item.name;
   const creator = isEpisode ? item.show?.name : item.artists?.map((artist) => artist.name).join(", ");
   const embedType = isEpisode ? "episode" : "track";
+  const imageUrl = isEpisode ? item.show?.images?.[0]?.url : item.album?.images?.[0]?.url;
 
   return {
     isPlaying,
     type: embedType,
     title,
     creator,
+    imageUrl,
     embedUrl: `https://open.spotify.com/embed/${embedType}/${item.id}?utm_source=generator`,
     spotifyUrl: item.external_urls?.spotify,
   };

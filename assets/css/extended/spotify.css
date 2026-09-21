@@ -1,0 +1,134 @@
+.spotify-widget {
+    max-width: 680px;
+    margin: 1.5rem 0 2rem;
+}
+
+.spotify-status {
+    margin-bottom: 0.75rem;
+    color: var(--secondary);
+    font-size: 0.9rem;
+}
+
+.spotify-current {
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    color: var(--primary);
+    background: #16271f;
+    border: 1px solid #2f6d4e;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.spotify-current:hover {
+    border-color: #1ed760;
+    transform: translateY(-2px);
+}
+
+.spotify-artwork {
+    width: 148px;
+    height: 148px;
+    flex: 0 0 148px;
+    object-fit: cover;
+}
+
+.spotify-details {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 1.25rem;
+}
+
+.spotify-state,
+.spotify-listen {
+    color: #1ed760;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.spotify-title,
+.spotify-creator {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.spotify-title {
+    font-size: 1.25rem;
+}
+
+.spotify-creator {
+    color: #b9c9c0;
+}
+
+.spotify-listen {
+    margin-top: 0.5rem;
+    color: var(--primary);
+    font-size: 0.8rem;
+    text-transform: none;
+}
+
+.spotify-top-tracks {
+    display: grid;
+    gap: 0.55rem;
+    padding: 0;
+    list-style: none;
+}
+
+.spotify-top-tracks li a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 56px;
+    padding: 0.35rem 0.65rem 0.35rem 0.45rem;
+    color: var(--primary);
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.spotify-top-tracks li a:hover {
+    border-color: #1ed760;
+}
+
+.spotify-top-tracks img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.spotify-rank {
+    width: 1.5rem;
+    color: #1ed760;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+
+.spotify-track-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+    .spotify-artwork {
+        width: 112px;
+        height: 112px;
+        flex-basis: 112px;
+    }
+
+    .spotify-details {
+        padding: 0.9rem;
+    }
+
+    .spotify-title {
+        font-size: 1rem;
+    }
+}
