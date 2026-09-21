@@ -9,3 +9,5 @@ Thumbs.db
 
 # Editor
 .vscode/
+# Local Netlify folder
+.netlify

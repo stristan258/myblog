@@ -7,3 +7,8 @@
 
 [functions]
   directory = "netlify/functions"
+
+[dev]
+  command = "hugo server --bind 0.0.0.0 --port 1313"
+  targetPort = 1313
+  port = 8888
