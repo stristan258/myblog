@@ -20,6 +20,10 @@ Track my live location, sent from the Garmin inReach. Send me an emwil and ill g
 			<span class="spotify-listen">Open in Spotify</span>
 		</span>
 	</a>
+		<div id="spotify-fallback" class="spotify-fallback" hidden>
+			<img id="spotify-fallback-art" class="spotify-fallback-art" alt="">
+			<span class="spotify-fallback-copy">I'm offline. Last played:</span>
+		</div>
 	<ol id="spotify-top-tracks" class="spotify-top-tracks" hidden></ol>
 </section>
 
@@ -31,6 +35,8 @@ Track my live location, sent from the Garmin inReach. Send me an emwil and ill g
 		const state = document.getElementById("spotify-state");
 		const title = document.getElementById("spotify-title");
 		const creator = document.getElementById("spotify-creator");
+		const fallback = document.getElementById("spotify-fallback");
+		const fallbackArt = document.getElementById("spotify-fallback-art");
 		const topTracks = document.getElementById("spotify-top-tracks");
 
 		try {
@@ -41,6 +47,7 @@ Track my live location, sent from the Garmin inReach. Send me an emwil and ill g
 				status.textContent = data.error || "Spotify listening status is unavailable.";
 				current.hidden = true;
 				current.style.display = "none";
+				fallback.hidden = true;
 				topTracks.hidden = true;
 				return;
 			}
@@ -49,13 +56,17 @@ Track my live location, sent from the Garmin inReach. Send me an emwil and ill g
 				status.textContent = "Nothing has been played recently.";
 				current.hidden = true;
 				current.style.display = "none";
+				fallback.hidden = true;
 				topTracks.hidden = true;
 				return;
 			}
 
 			if (data.topTracks) {
-				status.textContent = "Your top tracks this month";
+				status.textContent = "";
 				current.hidden = true;
+				fallbackArt.src = data.topTracks[0]?.imageUrl || "";
+				fallbackArt.alt = data.topTracks[0] ? `${data.topTracks[0].title} artwork` : "";
+				fallback.hidden = false;
 				topTracks.replaceChildren(...data.topTracks.map((track, index) => {
 					const item = document.createElement("li");
 					const link = document.createElement("a");
@@ -88,11 +99,13 @@ Track my live location, sent from the Garmin inReach. Send me an emwil and ill g
 			creator.textContent = data.creator;
 			current.hidden = false;
 			current.style.display = "flex";
+			fallback.hidden = true;
 			topTracks.hidden = true;
 		} catch (error) {
 			status.textContent = "Spotify listening status is unavailable.";
 			current.hidden = true;
 			current.style.display = "none";
+			fallback.hidden = true;
 			topTracks.hidden = true;
 		}
 	}

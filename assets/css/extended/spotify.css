@@ -14,20 +14,21 @@
     align-items: stretch;
     overflow: hidden;
     color: var(--primary);
-    background: #16271f;
-    border: 1px solid #2f6d4e;
-    border-radius: 12px;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     text-decoration: none;
     transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .spotify-current[hidden],
+.spotify-fallback[hidden],
 .spotify-top-tracks[hidden] {
     display: none;
 }
 
 .spotify-current:hover {
-    border-color: #1ed760;
+    border-color: var(--tertiary);
     transform: translateY(-2px);
 }
 
@@ -49,7 +50,7 @@
 
 .spotify-state,
 .spotify-listen {
-    color: #1ed760;
+    color: var(--secondary);
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -79,10 +80,40 @@
 }
 
 .spotify-top-tracks {
+    position: relative;
     display: grid;
-    gap: 0.35rem;
-    padding: 0;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0 1.4rem 1.4rem;
     list-style: none;
+    background: #21001f;
+    border: 1px solid #3f1740;
+    border-top: 0;
+    border-radius: 0 0 26px 26px;
+}
+
+.spotify-fallback {
+    display: flex;
+    min-height: 210px;
+    align-items: flex-end;
+    overflow: hidden;
+    padding: 1.4rem;
+    color: var(--primary);
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.spotify-fallback-art {
+    width: 148px;
+    height: 148px;
+    margin-right: 1rem;
+    object-fit: cover;
+}
+
+.spotify-fallback-copy {
+    color: var(--secondary);
+    font-size: 0.9rem;
 }
 
 .spotify-top-tracks li a {
@@ -92,14 +123,15 @@
     min-height: 42px;
     padding: 0.25rem 0.55rem 0.25rem 0.35rem;
     color: var(--primary);
-    background: var(--entry);
+    background: var(--code-bg);
     border: 1px solid var(--border);
+    border-radius: var(--radius);
     border-radius: 8px;
     text-decoration: none;
 }
 
 .spotify-top-tracks li a:hover {
-    border-color: #1ed760;
+    border-color: var(--tertiary);
 }
 
 .spotify-top-tracks img {
@@ -111,7 +143,7 @@
 
 .spotify-rank {
     width: 1.5rem;
-    color: #1ed760;
+    color: var(--secondary);
     font-variant-numeric: tabular-nums;
     text-align: center;
 }
@@ -123,6 +155,22 @@
 }
 
 @media (max-width: 520px) {
+    .spotify-fallback {
+        min-height: 0;
+        align-items: center;
+        padding: 0.9rem;
+    }
+
+    .spotify-fallback-art {
+        width: 96px;
+        height: 96px;
+        margin-right: 0.8rem;
+    }
+
+    .spotify-top-tracks {
+        padding: 0 0.75rem 0.75rem;
+    }
+
     .spotify-artwork {
         width: 112px;
         height: 112px;
