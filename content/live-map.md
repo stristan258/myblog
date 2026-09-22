@@ -34,7 +34,7 @@ Track my live location, sent from the Garmin inReach. Send me an emwil and ill g
 		const topTracks = document.getElementById("spotify-top-tracks");
 
 		try {
-			const response = await fetch('{{ "spotify.json" | relURL }}?v=' + Date.now());
+			const response = await fetch('/spotify.json?v=' + Date.now());
 			const data = await response.json();
 
 			if (!response.ok || data.error) {
