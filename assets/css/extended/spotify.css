@@ -1,6 +1,10 @@
 .spotify-widget {
     max-width: 680px;
     margin: 1.5rem 0 2rem;
+    padding: var(--gap);
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
 }
 
 .spotify-status {
@@ -80,16 +84,12 @@
 }
 
 .spotify-top-tracks {
-    position: relative;
     display: grid;
     gap: 0.45rem;
     margin: 0;
-    padding: 0 1.4rem 1.4rem;
+    padding: 0;
     list-style: none;
-    background: #21001f;
-    border: 1px solid #3f1740;
-    border-top: 0;
-    border-radius: 0 0 26px 26px;
+    background: transparent;
 }
 
 .spotify-fallback {

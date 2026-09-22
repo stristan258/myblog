@@ -1,0 +1,56 @@
+<section class="spotify-widget" aria-live="polite">
+  <div id="spotify-status" class="spotify-status">Loading your top tracks...</div>
+  <ol id="spotify-top-tracks" class="spotify-top-tracks" hidden></ol>
+</section>
+
+<script>
+  async function updateSpotifyStatus() {
+    const status = document.getElementById("spotify-status");
+    const topTracks = document.getElementById("spotify-top-tracks");
+
+    try {
+      const response = await fetch('/spotify.json?v=' + Date.now());
+      const data = await response.json();
+
+      if (!response.ok || data.error) {
+        status.textContent = data.error || "Spotify listening status is unavailable.";
+        topTracks.hidden = true;
+        return;
+      }
+
+      if (!data.topTracks?.length) {
+        status.textContent = "No top tracks are available yet.";
+        topTracks.hidden = true;
+        return;
+      }
+
+      status.textContent = "Your top five tracks this month";
+      topTracks.replaceChildren(...data.topTracks.slice(0, 5).map((track, index) => {
+        const item = document.createElement("li");
+        const link = document.createElement("a");
+        const image = document.createElement("img");
+        const text = document.createElement("span");
+        const rank = document.createElement("span");
+        rank.className = "spotify-rank";
+        rank.textContent = `${index + 1}`;
+        image.src = track.imageUrl;
+        image.alt = "";
+        text.className = "spotify-track-text";
+        text.textContent = `${track.title} - ${track.creator}`;
+        link.href = track.spotifyUrl;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.append(rank, image, text);
+        item.appendChild(link);
+        return item;
+      }));
+      topTracks.hidden = false;
+    } catch (error) {
+      status.textContent = "Spotify listening status is unavailable.";
+      topTracks.hidden = true;
+    }
+  }
+
+  updateSpotifyStatus();
+  setInterval(updateSpotifyStatus, 60000);
+</script>
