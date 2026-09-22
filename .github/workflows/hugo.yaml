@@ -1,10 +1,11 @@
 name: Deploy Hugo site to Pages
 
-# Commented automatic deployment through github pages
-# on:
-#   push:
-#     branches: ["main"]
-#   workflow_dispatch:
+on:
+  push:
+    branches: ["main"]
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -27,8 +28,14 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'latest'
+          hugo-version: '0.165.0'
           extended: true
+      - name: Update Spotify snapshot
+        run: node scripts/fetch-spotify.mjs
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
       - name: Build
         run: hugo --minify
       - name: Upload artifact

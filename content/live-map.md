@@ -34,12 +34,13 @@ Track my live location, sent from the Garmin inReach. Send me an emwil and ill g
 		const topTracks = document.getElementById("spotify-top-tracks");
 
 		try {
-			const response = await fetch("/.netlify/functions/spotify-now");
+			const response = await fetch('{{ "spotify.json" | relURL }}?v=' + Date.now());
 			const data = await response.json();
 
 			if (!response.ok || data.error) {
 				status.textContent = data.error || "Spotify listening status is unavailable.";
 				current.hidden = true;
+				current.style.display = "none";
 				topTracks.hidden = true;
 				return;
 			}
@@ -47,6 +48,7 @@ Track my live location, sent from the Garmin inReach. Send me an emwil and ill g
 			if (data.empty) {
 				status.textContent = "Nothing has been played recently.";
 				current.hidden = true;
+				current.style.display = "none";
 				topTracks.hidden = true;
 				return;
 			}
@@ -85,10 +87,12 @@ Track my live location, sent from the Garmin inReach. Send me an emwil and ill g
 			title.textContent = data.title;
 			creator.textContent = data.creator;
 			current.hidden = false;
+			current.style.display = "flex";
 			topTracks.hidden = true;
 		} catch (error) {
 			status.textContent = "Spotify listening status is unavailable.";
 			current.hidden = true;
+			current.style.display = "none";
 			topTracks.hidden = true;
 		}
 	}
