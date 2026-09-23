@@ -2,15 +2,16 @@
     box-sizing: border-box;
     width: 100%;
     max-width: 680px;
+    overflow: hidden;
     margin: 1.5rem 0 2rem;
-    padding: var(--gap);
+    padding: 0.75rem;
     background: var(--entry);
     border: 1px solid var(--border);
     border-radius: var(--radius);
 }
 
 .spotify-status {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     color: var(--secondary);
     font-size: 0.9rem;
 }
@@ -85,15 +86,27 @@
     text-transform: none;
 }
 
-.spotify-top-tracks {
+.spotify-widget .spotify-top-tracks {
     box-sizing: border-box;
     width: 100%;
+    max-width: 100%;
     display: grid;
-    gap: 0.45rem;
+    gap: 0.3rem;
     margin: 0;
     padding: 0;
     list-style: none;
     background: transparent;
+}
+
+.spotify-widget *,
+.spotify-widget *::before,
+.spotify-widget *::after {
+    box-sizing: border-box;
+}
+
+.spotify-widget .spotify-top-tracks li {
+    min-width: 0;
+    max-width: 100%;
 }
 
 .spotify-fallback {
@@ -122,17 +135,20 @@
 
 .spotify-top-tracks li a {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     box-sizing: border-box;
+    width: 100%;
     min-width: 0;
-    gap: 0.75rem;
-    min-height: 42px;
-    padding: 0.25rem 0.55rem 0.25rem 0.35rem;
+    max-width: 100%;
+    overflow: hidden;
+    gap: 0.65rem;
+    min-height: 54px;
+    padding: 0 0.45rem 0 0;
     color: var(--primary);
     background: var(--code-bg);
     border: 1px solid var(--border);
     border-radius: 8px;
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .spotify-top-tracks li a:hover {
@@ -140,22 +156,18 @@
 }
 
 .spotify-top-tracks img {
-    flex: 0 0 36px;
-    width: 36px;
-    height: 36px;
+    align-self: stretch;
+    flex: 0 0 72px;
+    width: 72px;
+    height: auto;
+    min-height: 54px;
+    margin-block: -1px;
     object-fit: cover;
-    border-radius: 4px;
-}
-
-.spotify-rank {
-    flex: 0 0 1.5rem;
-    width: 1.5rem;
-    color: var(--secondary);
-    font-variant-numeric: tabular-nums;
-    text-align: center;
+    border-radius: calc(var(--radius) - 1px) 0 0 calc(var(--radius) - 1px);
 }
 
 .spotify-track-text {
+    align-self: center;
     min-width: 0;
     flex: 1 1 auto;
     overflow: hidden;
@@ -164,6 +176,10 @@
 }
 
 @media (max-width: 520px) {
+    .spotify-widget {
+        padding: 0.5rem;
+    }
+
     .spotify-fallback {
         min-height: 0;
         align-items: center;
@@ -174,10 +190,6 @@
         width: 96px;
         height: 96px;
         margin-right: 0.8rem;
-    }
-
-    .spotify-top-tracks {
-        padding: 0 0.75rem 0.75rem;
     }
 
     .spotify-artwork {

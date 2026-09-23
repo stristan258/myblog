@@ -1,0 +1,51 @@
+{
+  "isPlaying": false,
+  "topTracks": [
+    {
+      "isPlaying": false,
+      "type": "track",
+      "title": "Follow Me",
+      "creator": "Rella, Conor Gardiner",
+      "imageUrl": "https://i.scdn.co/image/ab67616d0000b273f157a604a31b631d9d2e0f3c",
+      "embedUrl": "https://open.spotify.com/embed/track/7ClEMzpSQixYIBEFdyJtX4?utm_source=generator",
+      "spotifyUrl": "https://open.spotify.com/track/7ClEMzpSQixYIBEFdyJtX4"
+    },
+    {
+      "isPlaying": false,
+      "type": "track",
+      "title": "Worldwide",
+      "creator": "Asake",
+      "imageUrl": "https://i.scdn.co/image/ab67616d0000b2737c45c1c29c18a5e0b46fc117",
+      "embedUrl": "https://open.spotify.com/embed/track/3n7kzSJ246VvIe4lRmxV9X?utm_source=generator",
+      "spotifyUrl": "https://open.spotify.com/track/3n7kzSJ246VvIe4lRmxV9X"
+    },
+    {
+      "isPlaying": false,
+      "type": "track",
+      "title": "Nothin' Like",
+      "creator": "Lehin",
+      "imageUrl": "https://i.scdn.co/image/ab67616d0000b273798cfff749f222f5ac4fcefc",
+      "embedUrl": "https://open.spotify.com/embed/track/5YrrW4iu35IF2nturSRZNB?utm_source=generator",
+      "spotifyUrl": "https://open.spotify.com/track/5YrrW4iu35IF2nturSRZNB"
+    },
+    {
+      "isPlaying": false,
+      "type": "track",
+      "title": "Full Circle",
+      "creator": "George FitzGerald, Boxed In",
+      "imageUrl": "https://i.scdn.co/image/ab67616d0000b273e6463ad8a18f73d2436c15fc",
+      "embedUrl": "https://open.spotify.com/embed/track/4XK1a9vdsiDmhvdkFzGCQh?utm_source=generator",
+      "spotifyUrl": "https://open.spotify.com/track/4XK1a9vdsiDmhvdkFzGCQh"
+    },
+    {
+      "isPlaying": false,
+      "type": "track",
+      "title": "Far Away Place - Rampa Remix",
+      "creator": "Xinobi, Vaarwell, Rampa",
+      "imageUrl": "https://i.scdn.co/image/ab67616d0000b2732f6c2253ef0e3ac14aec9e0d",
+      "embedUrl": "https://open.spotify.com/embed/track/4SpESjSScmJyuMamD9MKOL?utm_source=generator",
+      "spotifyUrl": "https://open.spotify.com/track/4SpESjSScmJyuMamD9MKOL"
+    }
+  ],
+  "updatedAt": "2026-09-23T20:09:47.118Z"
+}
