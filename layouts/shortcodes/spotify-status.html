@@ -24,7 +24,7 @@
         return;
       }
 
-      status.textContent = "Your top five tracks this month";
+      status.textContent = "Spotify top five tracks this month";
       topTracks.replaceChildren(...data.topTracks.slice(0, 5).map((track, index) => {
         const item = document.createElement("li");
         const link = document.createElement("a");
