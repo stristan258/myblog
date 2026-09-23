@@ -76,9 +76,9 @@ menu:
       name: Trips
       url: /trips/
       weight: 30
-    - identifier: live map
-      name: Live Map
-      url: /live-map/
+    - identifier: live track
+      name: Live Track
+      url: /live-track/
       weight: 40
 
 pygmentsUseClasses: true
