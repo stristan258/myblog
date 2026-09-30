@@ -1,0 +1,77 @@
+<section class="strava-widget" aria-live="polite">
+  <p id="strava-status" class="strava-status">Loading latest hike...</p>
+  <a id="strava-activity" class="strava-activity" hidden target="_blank" rel="noopener noreferrer">
+    <div class="strava-activity-details">
+      <span class="strava-activity-label">LATEST PUBLIC HIKE</span>
+      <h3 id="strava-activity-name" class="strava-activity-name"></h3>
+      <time id="strava-activity-date" class="strava-activity-date"></time>
+      <ul id="strava-activity-stats" class="strava-activity-stats"></ul>
+      <span class="strava-activity-link">View on Strava</span>
+    </div>
+  </a>
+</section>
+
+<script>
+  async function updateStravaActivity() {
+    const status = document.getElementById("strava-status");
+    const card = document.getElementById("strava-activity");
+
+    try {
+      const response = await fetch('/strava.json?v=' + Date.now());
+      const data = await response.json();
+
+      if (!response.ok || data.error) {
+        status.textContent = data.error || "Strava activity is unavailable.";
+        card.hidden = true;
+        return;
+      }
+
+      if (!data.configured) {
+        status.textContent = "Strava is not connected yet.";
+        card.hidden = true;
+        return;
+      }
+
+      if (!data.activity) {
+        status.textContent = "No recent public hike found.";
+        card.hidden = true;
+        return;
+      }
+
+      const activity = data.activity;
+      const activityDate = new Date(activity.date);
+      const distance = Number(activity.distanceMeters);
+      const elevation = Number(activity.elevationGainMeters);
+      const stats = [];
+
+      card.href = activity.url;
+      document.getElementById("strava-activity-name").textContent = activity.name;
+      const date = document.getElementById("strava-activity-date");
+      date.dateTime = activity.date;
+      date.textContent = Number.isNaN(activityDate.getTime())
+        ? "Date unavailable"
+        : new Intl.DateTimeFormat(undefined, { dateStyle: "long" }).format(activityDate);
+
+      if (Number.isFinite(distance) && distance > 0) {
+        stats.push(`${new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(distance / 1000)} km`);
+      }
+      if (Number.isFinite(elevation) && elevation > 0) {
+        stats.push(`${Math.round(elevation)} m elevation gain`);
+      }
+      const statsList = document.getElementById("strava-activity-stats");
+      statsList.replaceChildren(...stats.map((value) => {
+        const item = document.createElement("li");
+        item.textContent = value;
+        return item;
+      }));
+
+      status.textContent = "";
+      card.hidden = false;
+    } catch (error) {
+      status.textContent = "Strava activity is unavailable.";
+      card.hidden = true;
+    }
+  }
+
+  updateStravaActivity();
+</script>

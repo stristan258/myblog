@@ -1,0 +1,85 @@
+.strava-widget {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 680px;
+    margin: 1.5rem 0 2rem;
+}
+
+.strava-widget * {
+    box-sizing: border-box;
+}
+
+.strava-status {
+    color: var(--secondary);
+    font-size: 0.9rem;
+}
+
+.strava-activity[hidden] {
+    display: none;
+}
+
+.strava-activity {
+    display: block;
+    padding: 1.1rem 1.25rem;
+    color: var(--primary);
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.strava-activity:hover {
+    border-color: var(--tertiary);
+    transform: translateY(-2px);
+}
+
+.strava-activity-details {
+    display: grid;
+    gap: 0.45rem;
+}
+
+.strava-activity-label {
+    color: var(--secondary);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.strava-activity-name {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.strava-activity-date {
+    color: var(--secondary);
+    font-size: 0.9rem;
+}
+
+.strava-activity-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    margin: 0.3rem 0;
+    padding: 0;
+    list-style: none;
+}
+
+.strava-activity-stats li {
+    font-size: 0.9rem;
+}
+
+.strava-activity-link {
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+@media (max-width: 520px) {
+    .strava-activity {
+        padding: 0.9rem;
+    }
+
+    .strava-activity-name {
+        font-size: 1.05rem;
+    }
+}

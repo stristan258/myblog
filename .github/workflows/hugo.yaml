@@ -36,6 +36,20 @@ jobs:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
           SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
+      - name: Update latest public hike
+        id: strava
+        run: node scripts/fetch-strava.mjs
+        env:
+          STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+          STRAVA_SECRETS_TOKEN: ${{ secrets.STRAVA_SECRETS_TOKEN }}
+      - name: Save rotated Strava refresh token
+        if: ${{ always() && steps.strava.outputs.refresh_token != '' }}
+        run: gh secret set STRAVA_REFRESH_TOKEN --repo "$GITHUB_REPOSITORY" --body "$STRAVA_REFRESH_TOKEN"
+        env:
+          GH_TOKEN: ${{ secrets.STRAVA_SECRETS_TOKEN }}
+          STRAVA_REFRESH_TOKEN: ${{ steps.strava.outputs.refresh_token }}
       - name: Build
         run: hugo --minify
       - name: Upload artifact
