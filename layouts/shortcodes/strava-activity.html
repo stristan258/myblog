@@ -1,14 +1,20 @@
-<section class="strava-widget" aria-live="polite">
-  <p id="strava-status" class="strava-status">Loading latest hike...</p>
-  <a id="strava-activity" class="strava-activity" hidden target="_blank" rel="noopener noreferrer">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<section class="strava-widget">
+  <p id="strava-status" class="strava-status" role="status" aria-live="polite">Loading latest hike...</p>
+  <article id="strava-activity" class="strava-activity" hidden>
+    <div id="strava-map" class="strava-map" aria-label="Map showing the hike route">
+      <p id="strava-map-fallback" class="strava-map-fallback" hidden></p>
+    </div>
     <div class="strava-activity-details">
       <span class="strava-activity-label">LATEST PUBLIC HIKE</span>
       <h3 id="strava-activity-name" class="strava-activity-name"></h3>
       <time id="strava-activity-date" class="strava-activity-date"></time>
       <ul id="strava-activity-stats" class="strava-activity-stats"></ul>
-      <span class="strava-activity-link">View on Strava</span>
+      <a id="strava-activity-link" class="strava-activity-link" target="_blank" rel="noopener noreferrer">View on Strava</a>
     </div>
-  </a>
+  </article>
 </section>
 
 <script>
@@ -44,7 +50,7 @@
       const elevation = Number(activity.elevationGainMeters);
       const stats = [];
 
-      card.href = activity.url;
+      document.getElementById("strava-activity-link").href = activity.url;
       document.getElementById("strava-activity-name").textContent = activity.name;
       const date = document.getElementById("strava-activity-date");
       date.dateTime = activity.date;
@@ -67,10 +73,80 @@
 
       status.textContent = "";
       card.hidden = false;
+      requestAnimationFrame(() => renderStravaMap(activity.summaryPolyline));
     } catch (error) {
       status.textContent = "Strava activity is unavailable.";
       card.hidden = true;
     }
+  }
+
+  function renderStravaMap(encodedPolyline) {
+    const mapElement = document.getElementById("strava-map");
+    const fallback = document.getElementById("strava-map-fallback");
+    if (!encodedPolyline) {
+      fallback.textContent = "No route map was shared for this hike.";
+      fallback.hidden = false;
+      return;
+    }
+    if (typeof L === "undefined") {
+      fallback.textContent = "The route map could not be loaded.";
+      fallback.hidden = false;
+      return;
+    }
+
+    const coordinates = decodeStravaPolyline(encodedPolyline);
+    if (!coordinates.length) {
+      fallback.textContent = "No route map was shared for this hike.";
+      fallback.hidden = false;
+      return;
+    }
+
+    const map = L.map(mapElement, { scrollWheelZoom: false });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    const route = L.polyline(coordinates, { color: "#fc4c02", weight: 4, opacity: 0.9 }).addTo(map);
+    const bounds = route.getBounds();
+    if (bounds.isValid()) {
+      map.fitBounds(bounds, { padding: [24, 24], maxZoom: 15 });
+    } else {
+      map.setView(coordinates[0], 13);
+    }
+    L.circleMarker(coordinates[0], { radius: 5, color: "#ffffff", weight: 2, fillColor: "#198754", fillOpacity: 1 }).addTo(map);
+    L.circleMarker(coordinates[coordinates.length - 1], { radius: 5, color: "#ffffff", weight: 2, fillColor: "#fc4c02", fillOpacity: 1 }).addTo(map);
+  }
+
+  function decodeStravaPolyline(encoded) {
+    const coordinates = [];
+    let index = 0;
+    let latitude = 0;
+    let longitude = 0;
+
+    while (index < encoded.length) {
+      let result = 0;
+      let shift = 0;
+      let byte;
+      do {
+        byte = encoded.charCodeAt(index++) - 63;
+        result |= (byte & 0x1f) << shift;
+        shift += 5;
+      } while (byte >= 0x20 && index < encoded.length);
+      latitude += result & 1 ? ~(result >> 1) : result >> 1;
+
+      result = 0;
+      shift = 0;
+      do {
+        byte = encoded.charCodeAt(index++) - 63;
+        result |= (byte & 0x1f) << shift;
+        shift += 5;
+      } while (byte >= 0x20 && index < encoded.length);
+      longitude += result & 1 ? ~(result >> 1) : result >> 1;
+
+      coordinates.push([latitude / 1e5, longitude / 1e5]);
+    }
+    return coordinates;
   }
 
   updateStravaActivity();

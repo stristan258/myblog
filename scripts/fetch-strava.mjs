@@ -43,6 +43,7 @@ if (unconfigured) {
       date: activity.start_date_local || activity.start_date,
       distanceMeters: activity.distance,
       elevationGainMeters: activity.total_elevation_gain,
+      summaryPolyline: activity.map?.summary_polyline || null,
       url: `https://www.strava.com/activities/${activity.id}`,
     } : null,
   });
