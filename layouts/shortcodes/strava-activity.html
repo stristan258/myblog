@@ -4,15 +4,25 @@
 <section class="strava-widget">
   <p id="strava-status" class="strava-status" role="status" aria-live="polite">Loading latest hike...</p>
   <article id="strava-activity" class="strava-activity" hidden>
-    <div id="strava-map" class="strava-map" aria-label="Map showing the hike route">
-      <p id="strava-map-fallback" class="strava-map-fallback" hidden></p>
+    <div class="strava-activity-header">
+      <span class="strava-profile-avatar">
+        <img id="strava-profile-image" class="strava-profile-image" alt="Strava profile photo" hidden>
+        <span id="strava-profile-fallback" class="strava-profile-fallback" aria-hidden="true">T</span>
+      </span>
+      <a id="strava-profile-link" class="strava-profile-link" target="_blank" rel="noopener noreferrer">Tristan Smith</a>
+      <time id="strava-activity-date" class="strava-activity-date"></time>
     </div>
     <div class="strava-activity-details">
-      <span class="strava-activity-label">LATEST PUBLIC HIKE</span>
       <h3 id="strava-activity-name" class="strava-activity-name"></h3>
-      <time id="strava-activity-date" class="strava-activity-date"></time>
-      <ul id="strava-activity-stats" class="strava-activity-stats"></ul>
-      <a id="strava-activity-link" class="strava-activity-link" target="_blank" rel="noopener noreferrer">View on Strava</a>
+      <p id="strava-activity-description" class="strava-activity-description" hidden></p>
+      <ul id="strava-activity-stats" class="strava-activity-stats">
+        <li class="strava-stat-action">
+          <a id="strava-activity-link" class="strava-activity-link" target="_blank" rel="noopener noreferrer">View on Strava</a>
+        </li>
+      </ul>
+    </div>
+    <div id="strava-map" class="strava-map" aria-label="Map showing the hike route">
+      <p id="strava-map-fallback" class="strava-map-fallback" hidden></p>
     </div>
   </article>
 </section>
@@ -51,25 +61,52 @@
       const stats = [];
 
       document.getElementById("strava-activity-link").href = activity.url;
+      const profileLink = document.getElementById("strava-profile-link");
+      profileLink.href = activity.profileUrl || "https://www.strava.com/athletes/31753850";
+      profileLink.textContent = activity.profileName || "Tristan Smith";
+      const profileImage = document.getElementById("strava-profile-image");
+      const profileFallback = document.getElementById("strava-profile-fallback");
+      if (activity.profileImageUrl) {
+        profileImage.src = activity.profileImageUrl;
+        profileImage.hidden = false;
+        profileFallback.hidden = true;
+      } else {
+        profileImage.removeAttribute("src");
+        profileImage.hidden = true;
+        profileFallback.hidden = false;
+      }
       document.getElementById("strava-activity-name").textContent = activity.name;
+      const description = document.getElementById("strava-activity-description");
+      description.textContent = activity.description || "";
+      description.hidden = !activity.description;
       const date = document.getElementById("strava-activity-date");
       date.dateTime = activity.date;
       date.textContent = Number.isNaN(activityDate.getTime())
         ? "Date unavailable"
-        : new Intl.DateTimeFormat(undefined, { dateStyle: "long" }).format(activityDate);
+        : new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(activityDate);
 
       if (Number.isFinite(distance) && distance > 0) {
-        stats.push(`${new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(distance / 1000)} km`);
+        stats.push({
+          label: "Distance",
+          value: `${new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(distance / 1000)} km`,
+        });
       }
       if (Number.isFinite(elevation) && elevation > 0) {
-        stats.push(`${Math.round(elevation)} m elevation gain`);
+        stats.push({ label: "Elevation", value: `${Math.round(elevation)} m` });
       }
       const statsList = document.getElementById("strava-activity-stats");
-      statsList.replaceChildren(...stats.map((value) => {
+      const actionItem = statsList.querySelector(".strava-stat-action");
+      statsList.replaceChildren(...stats.map(({ label, value }) => {
         const item = document.createElement("li");
-        item.textContent = value;
+        const statLabel = document.createElement("span");
+        const statValue = document.createElement("strong");
+        statLabel.className = "strava-stat-label";
+        statLabel.textContent = label;
+        statValue.className = "strava-stat-value";
+        statValue.textContent = value;
+        item.append(statLabel, statValue);
         return item;
-      }));
+      }), actionItem);
 
       status.textContent = "";
       card.hidden = false;

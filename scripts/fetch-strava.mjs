@@ -31,18 +31,28 @@ if (unconfigured) {
   }
 
   if (process.env.GITHUB_OUTPUT) {
-    console.log(`::add-mask::${tokenData.refresh_token}`);
+    if (process.env.GITHUB_ACTIONS === "true") {
+      console.log(`::add-mask::${tokenData.refresh_token}`);
+    }
     await appendFile(process.env.GITHUB_OUTPUT, `refresh_token=${tokenData.refresh_token}\n`);
   }
 
   const activity = await findLatestPublicHike(tokenData.access_token);
+  const athleteResponse = await fetch("https://www.strava.com/api/v3/athlete", {
+    headers: { Authorization: `Bearer ${tokenData.access_token}` },
+  });
+  const athlete = athleteResponse.ok ? await athleteResponse.json() : {};
   await writeSnapshot({
     configured: true,
     activity: activity ? {
       name: activity.name || "Hike",
       date: activity.start_date_local || activity.start_date,
+      description: activity.description || "",
       distanceMeters: activity.distance,
       elevationGainMeters: activity.total_elevation_gain,
+      profileImageUrl: athlete.profile_medium || athlete.profile || "",
+      profileName: [athlete.firstname, athlete.lastname].filter(Boolean).join(" ") || athlete.username || "",
+      profileUrl: athlete.id ? `https://www.strava.com/athletes/${athlete.id}` : "",
       summaryPolyline: activity.map?.summary_polyline || null,
       url: `https://www.strava.com/activities/${activity.id}`,
     } : null,

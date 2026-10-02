@@ -1,5 +1,12 @@
 {
-  "configured": false,
-  "activity": null,
-  "updatedAt": "2026-09-30T20:01:03.265Z"
+  "configured": true,
+  "activity": {
+    "name": "Lunch Hike",
+    "date": "2026-08-31T12:03:25Z",
+    "distanceMeters": 12607.9,
+    "elevationGainMeters": 275,
+    "summaryPolyline": "wq}{Hl~sMZlAr@dBrAhA^n@Rz@@|BBj@f@lBVV@Ld@Z~@f@hAb@DTEbC~@LJfAVl@MVLHDRE`Af@rAb@l@TlAz@h@v@t@lB`AlDpDDNEhAmA`EIfDOnBnApFMj@uCtBcAfB@XT`@GRBNGnAC~FGv@HFw@~E]zA?XbCvBRVRl@pAh@HCD^WtBD^hDfBN\\EjABJ~AxA^p@fAnCzCnDd@|@f@pAx@jAh@pA`BpBTpAEZM^@hLFfBXdCn@pCz@nCjCfF`AnC`@l@bC|Ab@NLGAGBRf@?d@d@tCjAfFq@PTTdAbA|@`A^pCPlAgAzACd@h@t@b@j@tAbAl@v@~@t@fAj@N\\Vh@AVz@bAzBp@vBPATUzAoBt@iAx@|@dA|ArCtAr@X`GfArBAnAULPPlANNfAu@lBo@hAy@p@kBHs@^mAf@k@@U@Hb@c@RcAHKx@?XOd@kA\\O`AhAj@TnAvAvBpA`@FbBhAdCz@vAz@n@z@~@pBXBDH|@j@dAVbArAFnAJ\\Fp@NVLl@d@|A`Dz@r@_@L{Al@gBZyDNa@z@oAH]@i@g@aBq@eA[{AA_@`@iAPgBH[bAiBX{AvA}An@mAHi@Aa@Om@]]m@iAUS{@IcC}@e@q@c@wAMiAAk@`@}B?yBk@gGH]AM\\e@QOQcAIgBDqAQuC_A{C_@wCD@S{AGkAK_@UsBDAAK[mA@o@Km@JBwBkAO@QWFE{@c@eALgAp@a@JiBa@iAEWOYDi@m@a@L}@AoAi@}Cr@{ALoCq@q@c@i@a@wCGiAk@g@KsAb@a@b@aAj@c@n@iAr@w@|@Q~AU~@UNo@?_Eu@k@[o@kAe@yBO_@W[aC_ByAoB_@QyABu@OiFOaBg@eBQqAq@y@?ORAl@KJmBc@gAq@aAaAi@UFHO^q@XWC{@aAWGg@a@u@gBgBuCs@q@q@sAc@c@k@}@a@oCOqBQg@c@y@WqDMu@[y@w@}@i@{@]Qg@Dg@i@kAq@g@i@cC_Bk@oA]K@GSMMk@WOm@eAe@[g@Ig@aA{BaCIgAI_@@o@]AOOUmAD?B}AC}@PcBwFeCgDcAIY[GKc@SQA_AKu@AsAGMAi@KOmCLoBY",
+    "url": "https://www.strava.com/activities/19975946905"
+  },
+  "updatedAt": "2026-10-02T16:06:15.729Z"
 }
