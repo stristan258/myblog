@@ -2,7 +2,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 <section class="strava-widget">
-  <p id="strava-status" class="strava-status" role="status" aria-live="polite">Loading latest hike...</p>
+  <p id="strava-status" class="strava-status" role="status" aria-live="polite">Loading latest activity...</p>
   <article id="strava-activity" class="strava-activity" hidden>
     <div class="strava-activity-header">
       <span class="strava-profile-avatar">
@@ -21,7 +21,7 @@
         </li>
       </ul>
     </div>
-    <div id="strava-map" class="strava-map" aria-label="Map showing the hike route">
+    <div id="strava-map" class="strava-map" aria-label="Map showing the activity route">
       <p id="strava-map-fallback" class="strava-map-fallback" hidden></p>
     </div>
   </article>
@@ -49,7 +49,7 @@
       }
 
       if (!data.activity) {
-        status.textContent = "No recent public hike found.";
+        status.textContent = "No recent public hike, ride or run found.";
         card.hidden = true;
         return;
       }
@@ -121,7 +121,7 @@
     const mapElement = document.getElementById("strava-map");
     const fallback = document.getElementById("strava-map-fallback");
     if (!encodedPolyline) {
-      fallback.textContent = "No route map was shared for this hike.";
+      fallback.textContent = "No route map was shared for this activity.";
       fallback.hidden = false;
       return;
     }
@@ -133,7 +133,7 @@
 
     const coordinates = decodeStravaPolyline(encodedPolyline);
     if (!coordinates.length) {
-      fallback.textContent = "No route map was shared for this hike.";
+      fallback.textContent = "No route map was shared for this activity.";
       fallback.hidden = false;
       return;
     }

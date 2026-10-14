@@ -37,7 +37,7 @@ if (unconfigured) {
     await appendFile(process.env.GITHUB_OUTPUT, `refresh_token=${tokenData.refresh_token}\n`);
   }
 
-  const activity = await findLatestPublicHike(tokenData.access_token);
+  const activity = await findLatestPublicEnduranceActivity(tokenData.access_token);
   const athleteResponse = await fetch("https://www.strava.com/api/v3/athlete", {
     headers: { Authorization: `Bearer ${tokenData.access_token}` },
   });
@@ -45,7 +45,7 @@ if (unconfigured) {
   await writeSnapshot({
     configured: true,
     activity: activity ? {
-      name: activity.name || "Hike",
+      name: activity.name || "Activity",
       date: activity.start_date_local || activity.start_date,
       description: activity.description || "",
       distanceMeters: activity.distance,
@@ -59,7 +59,7 @@ if (unconfigured) {
   });
 }
 
-async function findLatestPublicHike(accessToken) {
+async function findLatestPublicEnduranceActivity(accessToken) {
   const headers = { Authorization: `Bearer ${accessToken}` };
   for (let page = 1; ; page += 1) {
     const url = new URL("https://www.strava.com/api/v3/athlete/activities");
@@ -70,12 +70,22 @@ async function findLatestPublicHike(accessToken) {
       throw new Error(`Strava activities request failed: ${activities.message || "unknown error"}`);
     }
 
-    const hike = activities.find((activity) =>
-      (activity.sport_type === "Hike" || activity.type === "Hike") && activity.private === false,
+    const activity = activities.find((candidate) =>
+      candidate.private === false && [candidate.sport_type, candidate.type].some(isSupportedActivityType),
     );
-    if (hike) return hike;
+    if (activity) return activity;
     if (activities.length < 100) return null;
   }
+}
+
+function isSupportedActivityType(type) {
+  if (typeof type !== "string") return false;
+  const normalizedType = type.toLowerCase();
+  return normalizedType === "hike"
+    || normalizedType.endsWith("run")
+    || normalizedType.endsWith("ride")
+    || normalizedType === "velomobile"
+    || normalizedType === "handcycle";
 }
 
 async function writeSnapshot(data) {
