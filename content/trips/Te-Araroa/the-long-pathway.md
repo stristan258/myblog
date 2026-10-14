@@ -13,7 +13,7 @@ draft: false
 
 Te Araroa (The Long Pathway) is a continuous 3,000km trail which spans the entire length of New Zealand, from Cape Reinga in the north to Bluff in the south.
 
-<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+<div class="trip-route-stats">
   <div style="border: 1px solid var(--border); border-radius: 12px; padding: 1rem; background: var(--code-bg);">
     <div style="font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75;">Distance</div>
     <div style="font-size: 1.5rem; font-weight: 700; margin-top: 0.4rem;">~3,000 km</div>

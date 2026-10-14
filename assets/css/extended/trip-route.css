@@ -1,0 +1,12 @@
+.trip-route-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+@media (max-width: 600px) {
+    .trip-route-stats {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
