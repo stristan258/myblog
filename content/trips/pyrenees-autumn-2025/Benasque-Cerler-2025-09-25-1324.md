@@ -1,5 +1,5 @@
 ---
-title: “Stone Alley in Benasque”
+title: "Stone Alley in Benasque"
 date: 2025-09-25
 places: ["Benasque - Cerler, Spain"]
 cover:
