@@ -5,7 +5,7 @@ places: [""]
 cover:
   image: "/images/the-long-pathway.jpg"
   alt: "map of Te-Araroa"
-  caption: the long pathway
+  caption: "the long pathway"
 draft: false
 ---
 
