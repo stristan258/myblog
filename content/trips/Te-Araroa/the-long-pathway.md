@@ -1,7 +1,7 @@
 ---
 title: "Time for a long walk.."
 date: 2026-09-01
-places: [""]
+places: []
 lat: ""
 lon: ""
 region: ""
@@ -45,7 +45,6 @@ r/ultralight was a stapple for planning and refining my pack. 3000km is a long '
     <div id="s6xzpv"></div>
   </div>
 </div>
-
 
 
 
