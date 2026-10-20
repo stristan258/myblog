@@ -18,7 +18,12 @@
     {{- $lonTotal := 0.0 }}
     {{- $coordinateCount := 0 }}
     {{- range $pages }}
-      {{- if and (isset .Params "lat") (isset .Params "lon") }}
+      {{- if and
+        (isset .Params "lat")
+        (isset .Params "lon")
+        (ne (printf "%v" .Params.lat) "")
+        (ne (printf "%v" .Params.lon) "")
+      }}
         {{- $latTotal = math.Add $latTotal (float .Params.lat) }}
         {{- $lonTotal = math.Add $lonTotal (float .Params.lon) }}
         {{- $coordinateCount = add $coordinateCount 1 }}
