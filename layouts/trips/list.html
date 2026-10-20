@@ -1,44 +1,63 @@
 {{- define "main" }}
-<header class="page-header">
-  <h1>{{ .Title }}</h1>
-</header>
+{{- if eq .RelPermalink "/trips/" }}
+  {{- $items := slice }}
+  {{- $years := slice }}
+  {{- $tags := slice }}
+  {{- range .Sections }}
+    {{- $trip := . }}
+    {{- $status := partial "trip-status.html" $trip }}
+    {{- $start := "" }}
+    {{- with $trip.Params.start }}
+      {{- $start = (time.AsTime .).Format "2006-01-02" }}
+    {{- end }}
+    {{- $rank := "1" }}
+    {{- if eq $status "Upcoming" }}
+      {{- $rank = "3" }}
+    {{- else if eq $status "Live" }}
+      {{- $rank = "2" }}
+    {{- else if eq $status "Date TBD" }}
+      {{- $rank = "0" }}
+    {{- end }}
+    {{- $items = append (dict "page" $trip "status" $status "sortKey" (printf "%s-%s" $rank $start)) $items }}
+    {{- range $trip.Params.years }}
+      {{- $years = union $years (slice (printf "%v" .)) }}
+    {{- end }}
+    {{- range $trip.Params.tags }}
+      {{- $tags = union $tags (slice .) }}
+    {{- end }}
+  {{- end }}
+  {{- $items = sort $items "sortKey" "desc" }}
 
-  {{- if eq .RelPermalink "/trips/" }}
-<ul class="terms-tags">
-  {{- $root := . }}
-  {{- range site.Pages.ByTitle }}
-  {{- if and (eq .Kind "section") (eq .Parent.RelPermalink $root.RelPermalink) }}
-  <li>
-    <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-  </li>
-  {{- end }}
-  {{- end }}
-  </ul>
-  {{- else }}
-<div class="trip-entry-list">
-  {{- $section := . }}
-  {{- range site.Pages.ByTitle }}
-  {{- if and (eq .Kind "page") (hasPrefix .RelPermalink $section.RelPermalink) }}
-  <article class="post-entry">
-    {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}
-    {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
-    <header class="entry-header">
-      <h2 class="entry-hint-parent">{{ .Title }}</h2>
-    </header>
-    {{- if (ne (.Param "hideSummary") true) }}
-    <div class="entry-content">
-      <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
-    </div>
+<div class="trips-page">
+  <header class="trips-header">
+    <h1>{{ .Title }}</h1>
+    <p class="trips-subtitle">Every journey, newest first. Filter by year or tag.</p>
+  </header>
+
+  <nav class="trips-filters" aria-label="Filter trips">
+    <a class="trips-chip is-active" href="{{ .RelPermalink }}" data-filter-type="all" data-filter-value="all" aria-current="true">All</a>
+    {{- range collections.Reverse (sort $years) }}
+      {{- $year := . }}
+      {{- $term := site.GetPage (printf "/years/%s" $year) }}
+    <a class="trips-chip" href="{{ if $term }}{{ $term.RelPermalink }}{{ else }}{{ printf "/years/%s/" $year | relURL }}{{ end }}" data-filter-type="year" data-filter-value="{{ $year }}" aria-current="false">{{ $year }}</a>
     {{- end }}
-    {{- if not (.Param "hideMeta") }}
-    <footer class="entry-footer">
-      {{- partial "post_meta.html" . -}}
-    </footer>
+    {{- range sort $tags }}
+      {{- $tag := . }}
+      {{- $term := site.GetPage (printf "/tags/%s" ($tag | urlize)) }}
+    <a class="trips-chip" href="{{ if $term }}{{ $term.RelPermalink }}{{ else }}{{ printf "/tags/%s/" ($tag | urlize) | relURL }}{{ end }}" data-filter-type="tag" data-filter-value="{{ $tag }}" aria-current="false">{{ $tag }}</a>
     {{- end }}
-    <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .RelPermalink }}"></a>
-  </article>
-  {{- end }}
-  {{- end }}
-  </div>
-  {{- end }}
+  </nav>
+
+  <section class="trips-grid" id="trips-grid" aria-label="Trips">
+    {{- range $items }}
+      {{- partial "trip-card.html" (dict "page" .page "status" .status) }}
+    {{- end }}
+  </section>
+</div>
+
+{{- $tripsScript := resources.Get "js/trips.js" | minify }}
+<script src="{{ $tripsScript.RelPermalink }}" defer></script>
+{{- else }}
+  {{- partial "trip-detail.html" . }}
+{{- end }}
 {{- end }}

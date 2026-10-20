@@ -15,6 +15,9 @@ minify:
 taxonomies:
   place: places
   person: people
+  category: categories
+  tag: tags
+  year: years
 
 params:
   env: production

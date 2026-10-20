@@ -1,0 +1,85 @@
+{{- $trip := . -}}
+{{- $start := "" -}}
+{{- $end := "" -}}
+{{- with $trip.Params.start -}}
+  {{- $start = time.AsTime . -}}
+{{- end -}}
+{{- with $trip.Params.end -}}
+  {{- $end = time.AsTime . -}}
+{{- end -}}
+{{- $route := $trip.Resources.GetMatch "*.geojson" -}}
+{{- $routeType := "geojson" -}}
+{{- if not $route -}}
+  {{- $route = $trip.Resources.GetMatch "*.gpx" -}}
+  {{- $routeType = "gpx" -}}
+{{- end -}}
+<div class="trips-page trip-detail">
+  <header class="trips-header">
+    {{- partial "breadcrumbs.html" $trip }}
+    <h1>{{ $trip.Title }}</h1>
+    {{- $subtitle := slice }}
+    {{- if $start }}
+      {{- if $end }}
+        {{- if eq ($start.Format "2006") ($end.Format "2006") }}
+          {{- $subtitle = append (printf "%s – %s" ($start.Format "2 January") ($end.Format "2 January 2006")) $subtitle }}
+        {{- else }}
+          {{- $subtitle = append (printf "%s – %s" ($start.Format "2 January 2006") ($end.Format "2 January 2006")) $subtitle }}
+        {{- end }}
+      {{- else }}
+        {{- $subtitle = append ($start.Format "2 January 2006") $subtitle }}
+      {{- end }}
+    {{- end }}
+    {{- with $trip.Params.location }}
+      {{- $subtitle = append . $subtitle }}
+    {{- end }}
+    {{- with $trip.Params.route }}
+      {{- $subtitle = append . $subtitle }}
+    {{- end }}
+    {{- with $subtitle }}
+    <p class="trips-subtitle">{{ delimit . " · " }}</p>
+    {{- end }}
+  </header>
+
+  {{- partial "trip-stats.html" $trip }}
+
+  {{- with $route }}
+  <section class="trip-route-section" aria-label="Trip route">
+    <div id="trip-route-map" class="trip-route-map" role="application" aria-label="Map of the trip route">
+      <p class="trip-route-fallback">Enable JavaScript to view this route map.</p>
+    </div>
+  </section>
+  <script id="trip-route-data" type="application/json">{{ dict "url" .RelPermalink "type" $routeType | jsonify | safeJS }}</script>
+  {{- end }}
+
+  {{- with $trip.Params.days }}
+  <section class="trip-days" aria-labelledby="trip-days-title">
+    <h2 id="trip-days-title">Day by day</h2>
+    <ol class="trip-timeline">
+      {{- range . }}
+      <li>
+        <h3>{{ .title }}</h3>
+        {{- with .note }}<p>{{ . }}</p>{{ end }}
+      </li>
+      {{- end }}
+    </ol>
+  </section>
+  {{- end }}
+
+  {{- with $trip.Content }}
+  <div class="trip-content">{{ . }}</div>
+  {{- end }}
+
+  <section class="trip-photos" aria-labelledby="trip-photos-title">
+    <h2 id="trip-photos-title">Photos</h2>
+    <div class="places-grid">
+      {{- range $trip.RegularPages.ByDate.Reverse }}
+        {{- partial "photo-card.html" (dict "page" .) }}
+      {{- end }}
+    </div>
+  </section>
+</div>
+{{- if $route }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" defer></script>
+{{- end }}
+{{- $tripsScript := resources.Get "js/trips.js" | minify }}
+<script src="{{ $tripsScript.RelPermalink }}" defer></script>

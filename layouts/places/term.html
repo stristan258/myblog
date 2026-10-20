@@ -19,14 +19,9 @@
           {{- end }}
         {{- end }}
       {{- end }}
-    <article class="place-card">
-      {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}
-      {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
-      <div class="place-card-body">
-        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-        <p class="place-meta">{{ .Date.Format site.Params.DateFormat }}{{ with $region }} · {{ . }}{{ end }}</p>
-      </div>
-    </article>
+      {{- $meta := .Date.Format site.Params.DateFormat }}
+      {{- with $region }}{{ $meta = printf "%s · %s" $meta . }}{{ end }}
+      {{- partial "photo-card.html" (dict "page" . "meta" $meta) }}
     {{- end }}
   </section>
 </div>

@@ -1,0 +1,17 @@
+{{- $status := "Date TBD" -}}
+{{- with .Params.start -}}
+  {{- $start := (time.AsTime .).Format "2006-01-02" -}}
+  {{- $end := $start -}}
+  {{- with $.Params.end -}}
+    {{- $end = (time.AsTime .).Format "2006-01-02" -}}
+  {{- end -}}
+  {{- $today := now.Format "2006-01-02" -}}
+  {{- if gt $start $today -}}
+    {{- $status = "Upcoming" -}}
+  {{- else if and (le $start $today) (ge $end $today) -}}
+    {{- $status = "Live" -}}
+  {{- else -}}
+    {{- $status = "Done" -}}
+  {{- end -}}
+{{- end -}}
+{{- $status -}}

@@ -1,3 +1,8 @@
 {{- if and (eq .Kind "taxonomy") (eq .Data.Plural "places") }}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
 {{- end }}
+{{- if and (eq .Kind "section") (eq .Section "trips") (ne .RelPermalink "/trips/") }}
+  {{- with or (.Resources.GetMatch "*.geojson") (.Resources.GetMatch "*.gpx") }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+  {{- end }}
+{{- end }}

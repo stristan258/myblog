@@ -1,0 +1,22 @@
+{{- $trip := . -}}
+{{- $days := 0 -}}
+{{- if and $trip.Params.start $trip.Params.end -}}
+  {{- $start := time.AsTime $trip.Params.start -}}
+  {{- $end := time.AsTime $trip.Params.end -}}
+  {{- $days = add (div (sub $end.Unix $start.Unix) 86400) 1 -}}
+{{- else if $trip.Params.days -}}
+  {{- $days = len $trip.Params.days -}}
+{{- end -}}
+<div class="trip-stats" aria-label="Trip statistics">
+  {{- if gt $days 0 }}
+  <div class="trip-stat"><span>Days</span><strong>{{ $days }}</strong></div>
+  {{- end }}
+  {{- if isset $trip.Params "distance_km" }}
+    {{- $distance := $trip.Params.distance_km }}
+  <div class="trip-stat"><span>Distance</span><strong>{{ lang.FormatNumber 0 $distance }} km</strong></div>
+  {{- end }}
+  {{- if isset $trip.Params "camps" }}
+  <div class="trip-stat"><span>Wild camps</span><strong>{{ $trip.Params.camps }}</strong></div>
+  {{- end }}
+  <div class="trip-stat"><span>Photos</span><strong>{{ len $trip.RegularPages }}</strong></div>
+</div>

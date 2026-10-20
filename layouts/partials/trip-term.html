@@ -1,0 +1,23 @@
+{{- $trips := where .Pages "Kind" "section" -}}
+{{- $posts := where .Pages "Kind" "page" -}}
+<div class="trips-page">
+  <header class="trips-header">
+    {{- partial "breadcrumbs.html" . }}
+    <h1>{{ .Title }}</h1>
+    <p class="trips-subtitle">{{ len $trips }} {{ if eq (len $trips) 1 }}trip{{ else }}trips{{ end }}</p>
+  </header>
+  <section class="trips-grid" aria-label="Trips">
+    {{- range $trips.ByParam "start" | collections.Reverse }}
+      {{- partial "trip-card.html" (dict "page" .) }}
+    {{- end }}
+  </section>
+  {{- if gt (len $posts) 0 }}
+  <section class="trip-photos" aria-label="Posts">
+    <div class="places-grid">
+      {{- range $posts.ByDate.Reverse }}
+        {{- partial "photo-card.html" (dict "page" .) }}
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+</div>

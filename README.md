@@ -38,3 +38,90 @@ can use the fields above directly and need no YAML update. When a post provides
 its own location fields, those values take precedence over the fallback.
 
 To preview the site locally, run `hugo server` from the repository root.
+
+## Trips
+
+Each trip is a folder under `content/trips/`. Its `_index.md` describes the
+trip; Markdown files beside it are the trip's photo posts. You can do this
+entirely in Working Copy on your phone.
+
+### Create the trip
+
+1. In `content/trips/`, create a folder with a short URL-friendly name, such
+   as `coast-path-2027`.
+2. In that folder, create `_index.md`.
+3. Add the front matter below. Keep `title` and `start` when known; omit
+   optional fields you do not have. Replace the example values with your own.
+
+```yaml
+---
+title: "Coast Path 2027"
+start: "2027-06-12"
+end: "2027-06-15"
+location: "Wales"
+route: "Example start to finish"
+cover:
+  image: "https://images.trisphoto.com/your-trip-cover.jpeg"
+distance_km: 40
+camps: 2
+tags: ["Coastal"]
+years: ["2027"]
+days:
+  - title: "Day 1"
+    note: "A short note about the day"
+---
+```
+
+4. Save the file. The trip appears on `/trips/`; its detail page is at
+   `/trips/<folder-name>/`.
+
+`start` and `end` must be real trip dates in `YYYY-MM-DD` format—not the date
+you wrote a post or uploaded an image. `title` and `start` are the only
+required fields. If you do not know the start date yet, omit it; the index
+shows `Date TBD`.
+
+### Add photos to the trip
+
+Create each photo post as a `.md` file in the same trip folder, using the
+usual photo-post front matter and your iOS Shortcut. For example:
+
+```yaml
+---
+title: "Evening light on the coast"
+date: 2027-06-12
+places: ["Oxwich Bay"]
+lat: 51.56
+lon: -4.11
+region: Wales
+cover:
+  image: "https://images.trisphoto.com/your-photo.jpeg"
+draft: false
+---
+```
+
+The post's date, title, and `cover.image` appear in the trip's Photos grid.
+The number of posts in the folder is used for the photo count. Add more posts
+the same way as you upload them; no trip-level photo list needs maintaining.
+Round `lat` and `lon` to two decimal places before committing for location
+privacy. Keep `places` as a list and use `region` for the country or region.
+
+### Optional trip details
+
+- `location`, `route`, `distance_km`, and `camps` appear on the trip card or
+  detail page when provided. Only enter values you know.
+- `cover.image` is optional. It uses PaperMod's cover format and accepts an
+  R2 URL or a site image path. Without it, the trip card shows a placeholder.
+- Add a short `tags` list, such as `["Coastal"]` or `["Mountains"]`, to make
+  the trip available in the tag filters.
+- Set `years` to a list containing the year of `start`, such as `["2027"]`.
+  This supplies the year filter's link when JavaScript is unavailable.
+- `days` is optional. Add one `title` and optional `note` per day to show the
+  Day by day timeline.
+- To include a route map, put a `.gpx` or `.geojson` file beside `_index.md`.
+  The page uses Leaflet and OpenStreetMap. With no route file, the map panel
+  is omitted.
+
+Before publishing, check that dates and optional statistics are accurate,
+photo posts are in the trip folder, and each post has the right cover URL.
+Preview with `hugo server` when convenient; then commit and push the trip
+folder using Working Copy to publish it.

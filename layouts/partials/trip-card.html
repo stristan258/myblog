@@ -1,0 +1,43 @@
+{{- $trip := .page -}}
+{{- $status := .status | default (partial "trip-status.html" $trip) -}}
+{{- $year := "" -}}
+{{- with $trip.Params.years -}}
+  {{- $year = index . 0 | printf "%v" -}}
+{{- else -}}
+  {{- with $trip.Params.start -}}
+    {{- $year = (time.AsTime .).Format "2006" -}}
+  {{- end -}}
+{{- end -}}
+{{- $meta := slice -}}
+{{- with $trip.Params.location -}}
+  {{- $meta = append . $meta -}}
+{{- end -}}
+{{- with $trip.Params.route -}}
+  {{- $meta = append . $meta -}}
+{{- end -}}
+{{- with $trip.Params.distance_km -}}
+  {{- $distance := lang.FormatNumber 0 . -}}
+  {{- $meta = append (printf "%s km" $distance) $meta -}}
+{{- end -}}
+{{- with $trip.Params.start -}}
+  {{- $meta = append ((time.AsTime .).Format "January 2006") $meta -}}
+{{- end -}}
+{{- $photoCount := len $trip.RegularPages -}}
+{{- $photoLabel := "photos" -}}
+{{- if eq $photoCount 1 -}}
+  {{- $photoLabel = "photo" -}}
+{{- end -}}
+{{- $meta = append (printf "%d %s" $photoCount $photoLabel) $meta -}}
+{{- $tags := $trip.Params.tags | default slice -}}
+<a class="trip-card" href="{{ $trip.RelPermalink }}" aria-label="View trip: {{ $trip.LinkTitle }}" data-year="{{ $year }}" data-tags="{{ delimit $tags "|" }}">
+  {{- with $trip.Params.cover.image }}
+  <figure class="trip-card-cover"><img src="{{ . | safeURL }}" alt="" loading="lazy"></figure>
+  {{- else }}
+  <div class="trip-card-placeholder" aria-hidden="true"></div>
+  {{- end }}
+  <div class="trip-card-body">
+    {{- partial "trip-badge.html" $status }}
+    <h2>{{ $trip.LinkTitle }}</h2>
+    <p class="trip-card-meta">{{ delimit $meta " · " }}</p>
+  </div>
+</a>
