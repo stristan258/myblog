@@ -1,7 +1,9 @@
-# Places
+# Places and photo-post front matter
 
-For new photo posts, have your iOS Shortcut put the place name, GPS coordinates,
-and region directly in the generated Markdown front matter:
+Your iOS Shortcut can create a photo post with the location metadata in its
+front matter. New posts do not need a separate entry in `data/places.yaml`.
+
+## Fields for a photo post
 
 ```yaml
 places: ["Oxwich Bay"]
@@ -10,19 +12,29 @@ lon: -4.11
 region: Wales
 ```
 
-Use the same place name for photos taken in the same area. The Places map
-averages the coordinates of posts with that tag. Have the Shortcut round GPS
-coordinates to two decimal places before writing them: front matter is stored
-in the Git repository, so exact GPS coordinates there could reveal the photo's
-precise location. No separate location file or build-time geocoding is needed
-for new places.
+- `places` is a YAML list of specific place names. Keep the square brackets
+  even for one place, and quote names: `places: ["Benasque - Cerler"]`. Use
+  `places: []` if the post has no specific place. A post can list more than one
+  place, for example `places: ["Oxwich Bay", "Three Cliffs Bay"]`.
+- `lat` and `lon` are decimal GPS coordinates. Round them to two decimal places
+  in the Shortcut before saving the Markdown file. Posts are committed to the
+  Git repository, so avoid putting exact private coordinates there.
+- `region` is the country or region used to group the place filters, such as
+  `Wales` or `Spain`. It is separate from `places`: use `places: ["Benasque"]`
+  and `region: Spain`, not `places: ["Benasque, Spain"]`.
 
-Coordinates are decimal degrees. `region` sets the Places filter group (for
-example, a country or a region such as Wales). If it is missing, the site uses
-the existing `data/places.yaml` entry or the text after a comma in the place
-name. Existing posts can continue using `data/places.yaml` as a fallback; new
-posts do not need an entry there. If a photo has no GPS metadata, omit `lat` and
-`lon` rather than leaving them blank. Posts without GPS still appear in the list
-but do not add a map pin, and Hugo reports a warning to make the missing
-metadata visible during a build. Map pins are averaged per place and rounded to
-two decimal places before they are published.
+Use the same place name for posts from the same area so they share one place
+page and map pin. When several posts have coordinates for a place, the map uses
+their average, rounded to two decimal places. If a post has no GPS data, leave
+`lat` and `lon` blank as in the archetype, or omit them. That post still appears
+on its place page but does not contribute to the map pin. Hugo warns when a
+place has no usable coordinates.
+
+## Existing posts and location data
+
+Existing entries in `data/places.yaml` remain as a fallback for older posts
+that do not yet have `region`, `lat`, or `lon` in their front matter. New posts
+can use the fields above directly and need no YAML update. When a post provides
+its own location fields, those values take precedence over the fallback.
+
+To preview the site locally, run `hugo server` from the repository root.
