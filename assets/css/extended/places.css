@@ -1,46 +1,25 @@
 :root {
-    --places-bg: #f6f5f1;
-    --places-card: #ffffff;
-    --places-ink: #23232a;
-    --places-muted: #6b6b76;
-    --places-line: #e1dfd8;
-    --places-accent: #d9632b;
-    --places-secondary: #2f6f62;
-    --places-on-accent: #ffffff;
-    --places-pin-outline: #ffffff;
+    --places-bg: var(--code-bg);
+    --places-card: var(--entry);
+    --places-ink: var(--primary);
+    --places-muted: var(--secondary);
+    --places-line: var(--border);
+    --places-chip: var(--tertiary);
+    --places-pin: #d9632b;
+    --places-pin-outline: var(--entry);
     --places-shadow: rgb(0 0 0 / 35%);
 }
 
-html[data-theme="dark"] {
-    --places-bg: #2e2e33;
-    --places-card: #38383f;
-    --places-ink: #ececf0;
-    --places-muted: #a0a0ab;
-    --places-line: #4a4a53;
-    --places-accent: #f08a52;
-    --places-secondary: #6fc2b0;
-    --places-on-accent: #23232a;
-    --places-pin-outline: #2e2e33;
+:root[data-theme="dark"] {
+    --places-pin: #f08a52;
     --places-shadow: rgb(0 0 0 / 50%);
 }
 
 @media (prefers-color-scheme: dark) {
-    html:not([data-theme="light"]) {
-        --places-bg: #2e2e33;
-        --places-card: #38383f;
-        --places-ink: #ececf0;
-        --places-muted: #a0a0ab;
-        --places-line: #4a4a53;
-        --places-accent: #f08a52;
-        --places-secondary: #6fc2b0;
-        --places-on-accent: #23232a;
-        --places-pin-outline: #2e2e33;
+    :root:not([data-theme="light"]) {
+        --places-pin: #f08a52;
         --places-shadow: rgb(0 0 0 / 50%);
     }
-}
-
-html body.list:has(.places-page) {
-    background-color: var(--places-bg);
 }
 
 .places-page {
@@ -73,8 +52,8 @@ html body.list:has(.places-page) {
 .places-chip {
     padding: 4px 11px;
     border: 1px solid var(--places-line);
-    border-radius: 99px;
-    background: var(--places-card);
+    border-radius: var(--radius);
+    background: var(--places-chip);
     color: var(--places-ink);
     font-size: 13px;
     text-decoration: none;
@@ -82,14 +61,13 @@ html body.list:has(.places-page) {
 
 .places-chip:hover,
 .places-chip:focus-visible {
-    border-color: var(--places-accent);
-    color: var(--places-accent);
+    filter: brightness(0.96);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
 }
 
 .places-chip.is-active {
-    border-color: var(--places-accent);
-    background: var(--places-accent);
-    color: var(--places-on-accent);
+    font-weight: 600;
 }
 
 .places-map-panel {
@@ -124,7 +102,7 @@ html body.list:has(.places-page) {
     height: 18px;
     border: 3px solid var(--places-pin-outline);
     border-radius: 50% 50% 50% 0;
-    background: var(--places-accent);
+    background: var(--places-pin);
     box-shadow: 0 1px 5px var(--places-shadow);
     transform: rotate(-45deg);
 }
@@ -182,7 +160,8 @@ html body.list:has(.places-page) {
 
 .place-card h3 a:hover,
 .place-card h3 a:focus-visible {
-    color: var(--places-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
 }
 
 .place-meta {
@@ -207,7 +186,7 @@ html body.list:has(.places-page) {
 }
 
 .places-post-link:focus-visible {
-    outline: 3px solid var(--places-accent);
+    outline: 3px solid var(--places-ink);
     outline-offset: 3px;
 }
 
@@ -223,7 +202,7 @@ html body.list:has(.places-page) {
 }
 
 .leaflet-popup-content a {
-    color: var(--places-accent);
+    color: var(--places-ink);
 }
 
 @media (max-width: 420px) {
