@@ -43,7 +43,7 @@ params:
   profileMode:
     enabled: true
     title: Tristan Smith
-    imageUrl: "/images/profile.jpg"
+    imageUrl: "/images/IMG_5361.jpeg"
     imageTitle: "Tristan Smith"
     imageWidth: 250
     imageHeight: 250
