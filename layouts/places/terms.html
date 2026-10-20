@@ -13,9 +13,39 @@
     {{- $pages := $termPage.Pages.ByDate.Reverse }}
     {{- $latest := index $pages 0 }}
     {{- $placeData := index hugo.Data.places $placeName | default dict }}
-    {{- $region := index $placeData "country" | default "Unspecified region" }}
+    {{- $region := "" }}
+    {{- $latTotal := 0.0 }}
+    {{- $lonTotal := 0.0 }}
+    {{- $coordinateCount := 0 }}
+    {{- range $pages }}
+      {{- if and (isset .Params "lat") (isset .Params "lon") }}
+        {{- $latTotal = math.Add $latTotal (float .Params.lat) }}
+        {{- $lonTotal = math.Add $lonTotal (float .Params.lon) }}
+        {{- $coordinateCount = add $coordinateCount 1 }}
+      {{- end }}
+      {{- if and (not $region) .Params.region }}
+        {{- $region = .Params.region }}
+      {{- end }}
+    {{- end }}
+    {{- if not $region }}
+      {{- $region = index $placeData "country" }}
+    {{- end }}
+    {{- if and (not $region) (strings.Contains $placeName ",") }}
+      {{- $nameParts := split $placeName "," }}
+      {{- $region = strings.TrimSpace (index $nameParts (sub (len $nameParts) 1)) }}
+    {{- end }}
+    {{- $region = $region | default "Unspecified region" }}
     {{- $lat := index $placeData "lat" }}
     {{- $lon := index $placeData "lon" }}
+    {{- if gt $coordinateCount 0 }}
+      {{- $lat = math.Div (math.Round (math.Mul (math.Div $latTotal $coordinateCount) 100)) 100 }}
+      {{- $lon = math.Div (math.Round (math.Mul (math.Div $lonTotal $coordinateCount) 100)) 100 }}
+    {{- else if and (ne $lat nil) (ne $lon nil) }}
+      {{- $lat = math.Div (math.Round (math.Mul (float $lat) 100)) 100 }}
+      {{- $lon = math.Div (math.Round (math.Mul (float $lon) 100)) 100 }}
+    {{- else }}
+      {{- warnf "Place %q has no coordinates. Add lat and lon to its post front matter to show a map pin." $placeName }}
+    {{- end }}
     {{- $lastDate := "" }}
     {{- if $latest }}
       {{- $lastDate = $latest.Date.Format "20060102150405" }}

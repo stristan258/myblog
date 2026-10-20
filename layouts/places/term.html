@@ -9,9 +9,14 @@
   <section class="places-post-grid places-grid" aria-label="Photos from {{ .Title }}">
     {{- range .Pages.ByDate.Reverse }}
       {{- $region := "" }}
+      {{- with .Params.region }}
+        {{- $region = . }}
+      {{- end }}
       {{- with .GetTerms "places" }}
-        {{- with index hugo.Data.places (index . 0).LinkTitle }}
-          {{- $region = .country }}
+        {{- if not $region }}
+          {{- with index hugo.Data.places (index . 0).LinkTitle }}
+            {{- $region = .country }}
+          {{- end }}
         {{- end }}
       {{- end }}
     <article class="place-card">
