@@ -4,7 +4,7 @@
     --places-ink: var(--primary);
     --places-muted: var(--secondary);
     --places-line: var(--border);
-    --places-chip: var(--tertiary);
+    --places-chip: var(--code-bg);
     --places-pin: #d9632b;
     --places-pin-outline: var(--entry);
     --places-shadow: rgb(0 0 0 / 35%);
@@ -45,25 +45,25 @@
 .places-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
+    gap: 10px;
     margin: 10px 0 18px;
 }
 
 .places-chip {
-    padding: 4px 11px;
+    display: block;
+    padding: 0 14px;
     border: 1px solid var(--places-line);
     border-radius: var(--radius);
     background: var(--places-chip);
-    color: var(--places-ink);
-    font-size: 13px;
+    color: var(--places-muted);
+    font-size: 14px;
+    line-height: 34px;
     text-decoration: none;
 }
 
 .places-chip:hover,
 .places-chip:focus-visible {
-    filter: brightness(0.96);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+    background: var(--places-line);
 }
 
 .places-chip.is-active {
