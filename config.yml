@@ -48,10 +48,6 @@ params:
     imageWidth: 250
     imageHeight: 250
     buttons:
-      - name: Places
-        url: /places/
-      - name: Archives
-        url: /archives/
 
   socialIcons:
     - name: strava
