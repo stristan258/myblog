@@ -6,7 +6,7 @@
   {{- if eq .RelPermalink "/trips/" }}
 <ul class="terms-tags">
   {{- $root := . }}
-  {{- range site.AllPages.ByTitle }}
+  {{- range site.Pages.ByTitle }}
   {{- if and (eq .Kind "section") (eq .Parent.RelPermalink $root.RelPermalink) }}
   <li>
     <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
@@ -17,7 +17,7 @@
   {{- else }}
 <div class="trip-entry-list">
   {{- $section := . }}
-  {{- range site.AllPages.ByTitle }}
+  {{- range site.Pages.ByTitle }}
   {{- if and (eq .Kind "page") (hasPrefix .RelPermalink $section.RelPermalink) }}
   <article class="post-entry">
     {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}

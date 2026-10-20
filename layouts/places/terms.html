@@ -1,0 +1,100 @@
+{{- define "main" }}
+{{- $terms := .Data.Terms.Alphabetical }}
+{{- $places := slice }}
+{{- $regions := dict }}
+{{- $mapPlaces := slice }}
+
+{{- range $terms }}
+  {{- $name := strings.TrimSpace .Name }}
+  {{- if $name }}
+    {{- $term := . }}
+    {{- $termPage := site.GetPage (printf "/places/%s" $name) }}
+    {{- $placeName := $termPage.LinkTitle }}
+    {{- $pages := $termPage.Pages.ByDate.Reverse }}
+    {{- $latest := index $pages 0 }}
+    {{- $placeData := index hugo.Data.places $placeName | default dict }}
+    {{- $region := index $placeData "country" | default "Unspecified region" }}
+    {{- $lat := index $placeData "lat" }}
+    {{- $lon := index $placeData "lon" }}
+    {{- $lastDate := "" }}
+    {{- if $latest }}
+      {{- $lastDate = $latest.Date.Format "20060102150405" }}
+    {{- end }}
+    {{- $place := dict
+      "name" $placeName
+      "region" $region
+      "count" $term.Count
+      "url" $termPage.RelPermalink
+      "lastDate" $lastDate
+      "latest" $latest
+    }}
+    {{- $places = $places | append $place }}
+    {{- $regionEntry := index $regions $region }}
+    {{- if $regionEntry }}
+      {{- $regions = merge $regions (dict $region (dict
+        "count" (add (index $regionEntry "count") $term.Count)
+        "url" (index $regionEntry "url")
+      )) }}
+    {{- else }}
+      {{- $regions = merge $regions (dict $region (dict "count" $term.Count "url" $termPage.RelPermalink)) }}
+    {{- end }}
+    {{- if and (ne $lat nil) (ne $lon nil) }}
+      {{- $mapPlaces = $mapPlaces | append (dict
+        "name" $placeName
+        "region" $region
+        "count" $term.Count
+        "url" $termPage.RelPermalink
+        "lat" $lat
+        "lon" $lon
+      ) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- $places = sort $places "lastDate" "desc" }}
+
+<div class="places-page">
+  <header class="places-header">
+    <h1>Places</h1>
+    <p class="places-subtitle">Browse everything by location.</p>
+  </header>
+
+  <nav class="places-chips" aria-label="Filter places by country or region">
+    <a class="places-chip is-active" href="{{ .RelPermalink }}" data-region="all" aria-current="true">All places ({{ len $places }})</a>
+    {{- range $region, $details := $regions }}
+    <a class="places-chip" href="{{ index $details "url" }}" data-region="{{ $region }}" aria-current="false">{{ $region }} ({{ index $details "count" }})</a>
+    {{- end }}
+  </nav>
+
+  <section class="places-map-panel" aria-label="Map of places">
+    <div id="places-map" class="places-map" role="application" aria-label="Interactive map of places">
+      <p class="places-map-fallback">Enable JavaScript to explore the map. You can browse all destinations below.</p>
+    </div>
+    <noscript><p class="places-map-fallback">The interactive map requires JavaScript. Destination links and photo lists remain available below.</p></noscript>
+  </section>
+  <script id="places-map-data" type="application/json">{{ $mapPlaces | jsonify | safeJS }}</script>
+
+  <section class="places-recent" aria-labelledby="places-recent-title">
+    <h2 id="places-recent-title">Recently visited</h2>
+    <div class="places-grid" id="places-grid">
+      {{- range first 12 $places }}
+        {{- $place := . }}
+        {{- $latest := .latest }}
+      <article class="place-card" data-region="{{ .region }}">
+        {{- if and $latest $latest.Params.cover.image }}
+          {{- $isHidden := ($latest.Param "cover.hiddenInList") | default ($latest.Param "cover.hidden") | default false }}
+          {{- partial "cover.html" (dict "cxt" $latest "IsSingle" false "isHidden" $isHidden) }}
+        {{- end }}
+        <div class="place-card-body">
+          <h3><a href="{{ .url }}">{{ .name }}</a></h3>
+          <p class="place-meta">{{ .region }} · {{ .count }} {{ if eq .count 1 }}photo{{ else }}photos{{ end }}</p>
+        </div>
+      </article>
+      {{- end }}
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" defer></script>
+{{- $placesScript := resources.Get "js/places.js" | minify }}
+<script src="{{ $placesScript.RelPermalink }}" defer></script>
+{{- end }}
