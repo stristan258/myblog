@@ -1,6 +1,6 @@
 :root {
     --strava-bg: #2e2e33;
-    --strava-card: #38383f;
+    --strava-card: var(--entry);
     --strava-ink: #ececf0;
     --strava-mute: #a0a0ab;
     --strava-line: #4a4a53;
@@ -12,7 +12,6 @@
 
 :root[data-theme="light"] {
     --strava-bg: #f6f5f1;
-    --strava-card: #ffffff;
     --strava-ink: #23232a;
     --strava-mute: #6b6b76;
     --strava-line: #e1dfd8;
@@ -24,7 +23,6 @@
 @media (prefers-color-scheme: light) {
     :root:not([data-theme="dark"]) {
         --strava-bg: #f6f5f1;
-        --strava-card: #ffffff;
         --strava-ink: #23232a;
         --strava-mute: #6b6b76;
         --strava-line: #e1dfd8;
