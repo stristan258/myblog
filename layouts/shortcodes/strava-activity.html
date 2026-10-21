@@ -13,6 +13,7 @@
       <h3 class="strava-activity-name">
         <a id="strava-activity-link" class="strava-activity-link" target="_blank" rel="noopener noreferrer"></a>
       </h3>
+      <time id="strava-activity-date" class="strava-activity-date"></time>
       <ul id="strava-activity-stats" class="strava-activity-stats"></ul>
     </div>
   </article>
@@ -46,6 +47,7 @@
       }
 
       const activity = data.activity;
+      const activityDate = new Date(activity.date);
       const distance = Number(activity.distanceMeters);
       const elevation = Number(activity.elevationGainMeters);
       const movingTime = Number(activity.movingTimeSeconds ?? activity.movingTime ?? activity.moving_time);
@@ -54,6 +56,11 @@
       const activityLink = document.getElementById("strava-activity-link");
       activityLink.href = activity.url;
       activityLink.textContent = activity.name;
+      const date = document.getElementById("strava-activity-date");
+      date.dateTime = activity.date;
+      date.textContent = Number.isNaN(activityDate.getTime())
+        ? "Date unavailable"
+        : new Intl.DateTimeFormat(undefined, { day: "2-digit", month: "short", year: "numeric" }).format(activityDate);
 
       if (Number.isFinite(distance) && distance > 0) {
         stats.push({

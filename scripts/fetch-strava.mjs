@@ -50,6 +50,7 @@ if (unconfigured) {
       description: activity.description || "",
       distanceMeters: activity.distance,
       elevationGainMeters: activity.total_elevation_gain,
+      movingTimeSeconds: activity.moving_time,
       profileImageUrl: athlete.profile_medium || athlete.profile || "",
       profileName: [athlete.firstname, athlete.lastname].filter(Boolean).join(" ") || athlete.username || "",
       profileUrl: athlete.id ? `https://www.strava.com/athletes/${athlete.id}` : "",

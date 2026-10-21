@@ -76,8 +76,7 @@
 }
 
 .strava-activity-hero {
-    padding: 8px 8px 0;
-    background: var(--strava-map-hero);
+    padding: 0;
 }
 
 .strava-map {
@@ -87,7 +86,7 @@
     height: 240px;
     overflow: hidden;
     background: var(--strava-bg);
-    border-radius: 10px;
+    border-radius: 0;
 }
 
 .strava-map-fallback {
@@ -160,8 +159,14 @@
 }
 
 .md-content .strava-activity-details h3.strava-activity-name {
-    margin: 0 0 16px;
+    margin: 0 0 6px;
     font-size: 24px;
+}
+
+.strava-activity-date {
+    margin-bottom: 16px;
+    color: var(--strava-mute);
+    font-size: 13px;
 }
 
 .md-content a.strava-activity-link:not(.anchor),
@@ -227,5 +232,9 @@
     .md-content .strava-activity-details h3.strava-activity-name,
     .strava-stat-value {
         font-size: 20px;
+    }
+
+    .strava-activity-date {
+        margin-bottom: 14px;
     }
 }
