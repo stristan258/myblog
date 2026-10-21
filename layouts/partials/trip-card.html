@@ -36,7 +36,9 @@
   <div class="trip-card-placeholder" aria-hidden="true"></div>
   {{- end }}
   <div class="trip-card-body">
-    {{- partial "trip-badge.html" $status }}
+    {{- if in (slice "Upcoming" "Live") $status }}
+      {{- partial "trip-badge.html" $status }}
+    {{- end }}
     <h2>{{ $trip.LinkTitle }}</h2>
     <p class="trip-card-meta">{{ delimit $meta " · " }}</p>
   </div>

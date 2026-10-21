@@ -183,6 +183,12 @@
     border-radius: 12px;
     background: var(--places-card);
     color: var(--places-ink);
+    transition: border-color 0.2s ease;
+}
+
+.place-card:hover,
+.place-card:focus-within {
+    border-color: var(--tertiary);
 }
 
 .place-card[hidden] {
@@ -216,10 +222,8 @@
     text-decoration: none;
 }
 
-.place-card h3 a:hover,
-.place-card h3 a:focus-visible {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+.place-card h3 a:hover {
+    text-decoration: none;
 }
 
 .place-meta {
