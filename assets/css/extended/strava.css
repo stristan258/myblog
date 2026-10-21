@@ -38,6 +38,7 @@
     gap: 18px;
     box-sizing: border-box;
     width: 100%;
+    max-width: 680px;
     margin: 1.5rem 0 2rem;
 }
 
@@ -66,6 +67,10 @@
     border: 1px solid var(--strava-line);
     border-radius: 14px;
     transition: border-color 0.2s ease;
+}
+
+.strava-activity:only-of-type {
+    grid-column: 1 / -1;
 }
 
 .strava-activity:hover,
