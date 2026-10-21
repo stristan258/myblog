@@ -1,6 +1,6 @@
 baseURL: "https://www.trisphoto.com/"
 title:
-paginate: 5
+paginate: 3
 theme: PaperMod
 
 enableRobotsTXT: true
