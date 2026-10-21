@@ -4,25 +4,16 @@
 <section class="strava-widget">
   <p id="strava-status" class="strava-status" role="status" aria-live="polite">Loading latest activity...</p>
   <article id="strava-activity" class="strava-activity" hidden>
-    <div class="strava-activity-header">
-      <span class="strava-profile-avatar">
-        <img id="strava-profile-image" class="strava-profile-image" alt="Strava profile photo" hidden>
-        <span id="strava-profile-fallback" class="strava-profile-fallback" aria-hidden="true">T</span>
-      </span>
-      <a id="strava-profile-link" class="strava-profile-link" target="_blank" rel="noopener noreferrer">Tristan Smith</a>
-      <time id="strava-activity-date" class="strava-activity-date"></time>
+    <div class="strava-activity-hero">
+      <div id="strava-map" class="strava-map" aria-label="Map showing the activity route">
+        <p id="strava-map-fallback" class="strava-map-fallback" hidden></p>
+      </div>
     </div>
     <div class="strava-activity-details">
-      <h3 id="strava-activity-name" class="strava-activity-name"></h3>
-      <p id="strava-activity-description" class="strava-activity-description" hidden></p>
-      <ul id="strava-activity-stats" class="strava-activity-stats">
-        <li class="strava-stat-action">
-          <a id="strava-activity-link" class="strava-activity-link" target="_blank" rel="noopener noreferrer">View on Strava</a>
-        </li>
-      </ul>
-    </div>
-    <div id="strava-map" class="strava-map" aria-label="Map showing the activity route">
-      <p id="strava-map-fallback" class="strava-map-fallback" hidden></p>
+      <h3 class="strava-activity-name">
+        <a id="strava-activity-link" class="strava-activity-link" target="_blank" rel="noopener noreferrer"></a>
+      </h3>
+      <ul id="strava-activity-stats" class="strava-activity-stats"></ul>
     </div>
   </article>
 </section>
@@ -55,47 +46,34 @@
       }
 
       const activity = data.activity;
-      const activityDate = new Date(activity.date);
       const distance = Number(activity.distanceMeters);
       const elevation = Number(activity.elevationGainMeters);
+      const movingTime = Number(activity.movingTimeSeconds ?? activity.movingTime ?? activity.moving_time);
       const stats = [];
 
-      document.getElementById("strava-activity-link").href = activity.url;
-      const profileLink = document.getElementById("strava-profile-link");
-      profileLink.href = activity.profileUrl || "https://www.strava.com/athletes/31753850";
-      profileLink.textContent = activity.profileName || "Tristan Smith";
-      const profileImage = document.getElementById("strava-profile-image");
-      const profileFallback = document.getElementById("strava-profile-fallback");
-      if (activity.profileImageUrl) {
-        profileImage.src = activity.profileImageUrl;
-        profileImage.hidden = false;
-        profileFallback.hidden = true;
-      } else {
-        profileImage.removeAttribute("src");
-        profileImage.hidden = true;
-        profileFallback.hidden = false;
-      }
-      document.getElementById("strava-activity-name").textContent = activity.name;
-      const description = document.getElementById("strava-activity-description");
-      description.textContent = activity.description || "";
-      description.hidden = !activity.description;
-      const date = document.getElementById("strava-activity-date");
-      date.dateTime = activity.date;
-      date.textContent = Number.isNaN(activityDate.getTime())
-        ? "Date unavailable"
-        : new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(activityDate);
+      const activityLink = document.getElementById("strava-activity-link");
+      activityLink.href = activity.url;
+      activityLink.textContent = activity.name;
 
       if (Number.isFinite(distance) && distance > 0) {
         stats.push({
-          label: "Distance",
+          label: "Dist",
           value: `${new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(distance / 1000)} km`,
         });
       }
+      if (Number.isFinite(movingTime) && movingTime > 0) {
+        const totalMinutes = Math.floor(movingTime / 60);
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        stats.push({
+          label: "Time",
+          value: `${hours}:${String(minutes).padStart(2, "0")}`,
+        });
+      }
       if (Number.isFinite(elevation) && elevation > 0) {
-        stats.push({ label: "Elevation", value: `${Math.round(elevation)} m` });
+        stats.push({ label: "Gain", value: `${Math.round(elevation)} m` });
       }
       const statsList = document.getElementById("strava-activity-stats");
-      const actionItem = statsList.querySelector(".strava-stat-action");
       statsList.replaceChildren(...stats.map(({ label, value }) => {
         const item = document.createElement("li");
         const statLabel = document.createElement("span");
@@ -104,9 +82,9 @@
         statLabel.textContent = label;
         statValue.className = "strava-stat-value";
         statValue.textContent = value;
-        item.append(statLabel, statValue);
+        item.append(statValue, statLabel);
         return item;
-      }), actionItem);
+      }));
 
       status.textContent = "";
       card.hidden = false;
@@ -144,15 +122,18 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    const route = L.polyline(coordinates, { color: "#fc4c02", weight: 4, opacity: 0.9 }).addTo(map);
+    const colors = getComputedStyle(mapElement.closest(".strava-widget"));
+    const routeColor = colors.getPropertyValue("--strava-route").trim();
+    const startColor = colors.getPropertyValue("--strava-secondary").trim();
+    const route = L.polyline(coordinates, { color: routeColor || "#ff6a2b", weight: 4, opacity: 0.9, lineCap: "round", lineJoin: "round" }).addTo(map);
     const bounds = route.getBounds();
     if (bounds.isValid()) {
       map.fitBounds(bounds, { padding: [24, 24], maxZoom: 15 });
     } else {
       map.setView(coordinates[0], 13);
     }
-    L.circleMarker(coordinates[0], { radius: 5, color: "#ffffff", weight: 2, fillColor: "#198754", fillOpacity: 1 }).addTo(map);
-    L.circleMarker(coordinates[coordinates.length - 1], { radius: 5, color: "#ffffff", weight: 2, fillColor: "#fc4c02", fillOpacity: 1 }).addTo(map);
+    L.circleMarker(coordinates[0], { radius: 5, color: "#ffffff", weight: 2, fillColor: startColor || "#6fc2b0", fillOpacity: 1 }).addTo(map);
+    L.circleMarker(coordinates[coordinates.length - 1], { radius: 5, color: "#ffffff", weight: 2, fillColor: "#ffffff", fillOpacity: 1 }).addTo(map);
   }
 
   function decodeStravaPolyline(encoded) {
