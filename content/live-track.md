@@ -3,16 +3,16 @@ title: "Live Track"
 draft: false
 ---
 
-## Where's Wally
+## Garmin
 
 Track live location, sent from Garmin inReach. 
 
 <a href="https://live.garmin.com/lutris" target="_blank" rel="noopener noreferrer">View my live tracker on Garmin →</a>
 
-## Where's my Kudos?
+## Strava
 
 {{< strava-activity >}}
 
-## On-Air
+## Spotify 
 
 {{< spotify-status >}}

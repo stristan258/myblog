@@ -1,10 +1,9 @@
 .spotify-widget {
     box-sizing: border-box;
     width: 100%;
-    max-width: 680px;
     overflow: hidden;
     margin: 1.5rem 0 2rem;
-    padding: 0.75rem;
+    padding: 20px 24px 22px;
     background: var(--entry);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -177,7 +176,7 @@
 
 @media (max-width: 520px) {
     .spotify-widget {
-        padding: 0.5rem;
+        padding: 18px 20px 20px;
     }
 
     .spotify-fallback {
