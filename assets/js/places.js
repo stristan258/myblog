@@ -39,7 +39,7 @@
   });
 
   if (markerBounds.length > 0) {
-    map.fitBounds(markerBounds, { padding: [24, 24], maxZoom: 10 });
+    map.fitBounds(markerBounds, { padding: [24, 24], maxZoom: 13 });
   } else {
     map.setView([20, 0], 2);
   }
@@ -73,7 +73,7 @@
       });
 
       if (visibleBounds.length > 0) {
-        map.fitBounds(visibleBounds, { padding: [24, 24], maxZoom: 10 });
+        map.fitBounds(visibleBounds, { padding: [24, 24], maxZoom: 13 });
       } else {
         map.setView([20, 0], 2);
       }
