@@ -1,3 +1,22 @@
+# Site structure and content
+
+This site uses Hugo with the PaperMod theme. Keep authored pages, trips, and
+photo posts as Markdown files with front matter; an HTML shortcode inside a
+Markdown page is for an interactive component, not a separate content format.
+For example, `content/live-track.md` uses the `strava-activity` and
+`spotify-status` shortcodes, whose templates live in `layouts/shortcodes/`.
+
+PaperMod still provides shared site features such as the profile homepage,
+navigation, post rendering, and theme toggle. Site-specific pages and styling
+belong in this repository's `layouts/` and `assets/` directories; do not edit
+files under `themes/PaperMod/`.
+
+As the site grows, extend these site-level templates and partials incrementally
+instead of replacing the theme or converting ordinary content to HTML. Revisit
+whether to replace PaperMod if its assumptions repeatedly require workarounds,
+or if most shared site behavior has become custom and you are ready to maintain
+it yourself.
+
 # Places and photo-post front matter
 
 Your iOS Shortcut can create a photo post with the location metadata in its
@@ -77,8 +96,8 @@ days:
 
 `start` and `end` must be real trip dates in `YYYY-MM-DD` format—not the date
 you wrote a post or uploaded an image. `title` and `start` are the only
-required fields. If you do not know the start date yet, omit it; the index
-shows `Date TBD`.
+required fields. If the start date is unknown, omit it; optional trip details
+will be hidden when they are not provided.
 
 ### Add photos to the trip
 

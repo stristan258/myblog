@@ -38,7 +38,6 @@
     gap: 18px;
     box-sizing: border-box;
     width: 100%;
-    max-width: 680px;
     margin: 1.5rem 0 2rem;
 }
 
@@ -64,7 +63,7 @@
     overflow: hidden;
     color: var(--strava-ink);
     background: var(--strava-card);
-    border: 1px solid var(--strava-line);
+    border: 1px solid transparent;
     border-radius: 14px;
     transition: border-color 0.2s ease;
 }
