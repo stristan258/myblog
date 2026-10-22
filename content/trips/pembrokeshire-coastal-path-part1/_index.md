@@ -1,7 +1,7 @@
 ---
-title: "Pembrokeshire Coastal Path 2026"
-start: "2026-08-27"
-end: "2026-08-30"
+title: "Pembrokeshire Coastal Path Part1"
+start: "2026-06-26"
+end: "2026-06-28"
 location: "Wales"
 cover:
   image: ""
