@@ -29,10 +29,6 @@
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-.main:has(.places-page) {
-    max-width: min(920px, calc(100% - 40px));
-}
-
 .places-header h1 {
     margin-bottom: 4px;
 }
@@ -268,10 +264,6 @@
 }
 
 @media (max-width: 420px) {
-    .main:has(.places-page) {
-        max-width: calc(100% - 28px);
-    }
-
     .places-map {
         min-height: 240px;
     }
