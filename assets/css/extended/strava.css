@@ -54,6 +54,10 @@
     font-size: 0.9rem;
 }
 
+.md-content .strava-widget p.strava-status:empty {
+    display: none;
+}
+
 .strava-activity[hidden] {
     display: none;
 }
