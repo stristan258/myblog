@@ -1,6 +1,6 @@
 {{- define "main" }}
 <div class="places-page">
-  <header class="places-header">
+  <header class="places-header page-header">
     {{- partial "breadcrumbs.html" . }}
     <h1>{{ .Title }}</h1>
     <p class="places-subtitle">{{ len .Pages }} {{ if eq (len .Pages) 1 }}photo{{ else }}photos{{ end }} from this place.</p>

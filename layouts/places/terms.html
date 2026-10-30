@@ -88,7 +88,7 @@
 {{- $places = sort $places "lastDate" "desc" }}
 
 <div class="places-page">
-  <header class="places-header">
+  <header class="places-header page-header">
     <h1>Places</h1>
     <p class="places-subtitle">Browse by location.</p>
   </header>
@@ -115,12 +115,13 @@
         {{- $place := . }}
         {{- $latest := .latest }}
       <article class="place-card" data-region="{{ .region }}">
+        <a class="places-post-link" href="{{ .url }}" aria-label="View {{ .name }}"></a>
         {{- if and $latest $latest.Params.cover.image }}
           {{- $isHidden := ($latest.Param "cover.hiddenInList") | default ($latest.Param "cover.hidden") | default false }}
           {{- partial "cover.html" (dict "cxt" $latest "IsSingle" false "isHidden" $isHidden) }}
         {{- end }}
         <div class="place-card-body">
-          <h3><a href="{{ .url }}">{{ .name }}</a></h3>
+          <h3>{{ .name }}</h3>
           <p class="place-meta">{{ .region }} · {{ .count }} {{ if eq .count 1 }}photo{{ else }}photos{{ end }}</p>
         </div>
       </article>

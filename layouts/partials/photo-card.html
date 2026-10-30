@@ -1,10 +1,11 @@
 {{- $page := .page -}}
 {{- $meta := .meta | default ($page.Date.Format site.Params.DateFormat) -}}
 <article class="place-card">
+  <a class="places-post-link" href="{{ $page.RelPermalink }}" aria-label="View {{ $page.Title }}"></a>
   {{- $isHidden := ($page.Param "cover.hiddenInList") | default ($page.Param "cover.hidden") | default false }}
   {{- partial "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden) }}
   <div class="place-card-body">
-    <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+    <h3>{{ $page.Title }}</h3>
     <p class="place-meta">{{ $meta }}</p>
   </div>
 </article>

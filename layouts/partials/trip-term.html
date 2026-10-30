@@ -1,7 +1,7 @@
 {{- $trips := where .Pages "Kind" "section" -}}
 {{- $posts := where .Pages "Kind" "page" -}}
 <div class="trips-page">
-  <header class="trips-header">
+  <header class="trips-header page-header">
     {{- partial "breadcrumbs.html" . }}
     <h1>{{ .Title }}</h1>
     <p class="trips-subtitle">{{ len $trips }} {{ if eq (len $trips) 1 }}trip{{ else }}trips{{ end }}</p>

@@ -23,18 +23,18 @@
 }
 
 .places-page {
-    max-width: 920px;
+    width: 100%;
     margin-inline: auto;
     color: var(--places-ink);
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 .places-header h1 {
-    margin-bottom: 4px;
+    margin-bottom: 0;
+    font-size: 40px;
 }
 
 .places-subtitle {
-    margin: 0 0 18px;
+    margin: 10px 0 0;
     color: var(--places-muted);
 }
 
@@ -127,9 +127,9 @@
 .places-map-panel {
     overflow: hidden;
     padding: 8px;
-    border: 1px solid var(--places-line);
-    border-radius: 12px;
-    background: var(--places-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--entry);
 }
 
 .places-map {
@@ -162,9 +162,10 @@
 }
 
 .places-recent h2 {
-    margin: 28px 0 10px;
+    margin: 32px 0 24px;
     color: var(--places-ink);
-    font-size: 20px;
+    font-size: 32px;
+    line-height: 1.2;
 }
 
 .places-grid {
@@ -174,17 +175,19 @@
 }
 
 .place-card {
+    position: relative;
     overflow: hidden;
-    border: 1px solid var(--places-line);
-    border-radius: 12px;
-    background: var(--places-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--entry);
     color: var(--places-ink);
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, transform 0.25s ease;
 }
 
 .place-card:hover,
 .place-card:focus-within {
     border-color: var(--tertiary);
+    transform: translateY(-2px);
 }
 
 .place-card[hidden] {
@@ -205,12 +208,13 @@
 }
 
 .place-card-body {
-    padding: 12px 14px;
+    padding: var(--gap);
 }
 
 .place-card h3 {
-    margin: 0 0 2px;
-    font-size: 17px;
+    margin: 0 0 8px;
+    font-size: 24px;
+    line-height: 1.3;
 }
 
 .place-card h3 a {
