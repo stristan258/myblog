@@ -1,6 +1,6 @@
 ---
 title: "Pyrenees Autumn 2025"
-start: "2025-09-24"
+start: "2025-09-20"
 end: "2025-09-25"
 location: "Spain"
 cover:
