@@ -46,11 +46,16 @@ params:
   profileMode:
     enabled: true
     title: Tristan Smith
+    subtitle: "Currently walking Te Araroa, New Zealand's 3,000 km long-distance trail. Photos, notes and a live tracker below." 
     imageUrl: "/images/IMG_5361.jpeg"
     imageTitle: "Tristan Smith"
     imageWidth: 250
     imageHeight: 250
-    buttons:
+    buttons: 
+      - name: Te Araroa
+        url: /trips/te-araroa/
+      - name: Live Track
+        url: /live-track/
 
   socialIcons:
     - name: strava
