@@ -4,7 +4,7 @@ location: New Zealand
 route: SOBO
 distance_km: 3000
 cover:
-  image: “https://images.trisphoto.com/2026-11-12-0746.jpeg”
+  image: "https://images.trisphoto.com/2026-11-12-0746.jpeg"
 tags:
   - Thru-hike
 draft: false
