@@ -7,7 +7,7 @@ draft: false
 
 Track live location, sent from Garmin inReach. 
 
-<a href="https://live.garmin.com/lutris" target="_blank" rel="noopener noreferrer">View my live tracker on Garmin →</a>
+<a href="https://eur-share.explore.garmin.com/luctris" target="_blank" rel="noopener noreferrer">View map share on Garmin →</a>
 
 ## Strava
 
